@@ -2,7 +2,6 @@
 import * as React from 'react';
 import {search} from './search';
 import type {$AxiosXHR} from 'axios';
-import type {Point, FeatureTemplate} from 'flow-geojson';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -19,17 +18,6 @@ import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import classNames from 'classnames';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
-
-export type Result = {
-  bbox: [number, number, number, number],
-  center: number[],
-  place_name: string,
-  place_type: string[],
-  relevance: number,
-  text: string,
-  address: string,
-  context: any[]
-} & FeatureTemplate<Point>;
 
 type Props = {
   classes: any,
