@@ -12,6 +12,13 @@
   ],
   "plugins": [
     "flow-react-proptypes",
+    [
+      "transform-runtime",
+      {
+        "polyfill": false,
+        "regenerator": true
+      }
+    ],
     "external-helpers",
     "transform-class-properties"
   ]
