@@ -118,11 +118,16 @@ class MatGeocoder extends React.Component<Props, State> {
     value: ''
   };
 
-  inputRef = React.createRef();
+  input: HTMLInputElement;
+
+  storeInputReference = (autosuggest) => {
+    if (autosuggest != null) {
+      this.input = autosuggest.input;
+    }
+  };
 
   renderInput = (inputProps) => {
-    const {classes, ...other} = inputProps;
-
+    const {classes, ref, ...other} = inputProps;
     return (
       <React.Fragment>
         <DebouncedProgressBar show={this.state.loading} />
@@ -135,10 +140,8 @@ class MatGeocoder extends React.Component<Props, State> {
             >
               <TextField
                 fullWidth
-                inputProps={{
-                  ref: this.inputRef
-                }}
                 InputProps={{
+                  inputRef: ref,
                   startAdornment: (
                     <InputAdornment position="start">
                       <SearchIcon color="action" />
@@ -177,7 +180,7 @@ class MatGeocoder extends React.Component<Props, State> {
   };
 
   focusInput = () => {
-    if (this.inputRef.current) this.inputRef.current.focus();
+    if (this.input) this.input.focus();
   };
 
   componentDidMount() {
@@ -263,6 +266,7 @@ class MatGeocoder extends React.Component<Props, State> {
 
     return (
       <Autosuggest
+        ref={this.storeInputReference}
         theme={{
           container: classes.container,
           suggestionsContainerOpen: classes.suggestionsContainerOpen,
