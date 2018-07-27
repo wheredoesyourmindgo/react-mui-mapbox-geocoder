@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/wheredoesyourmindgo/react-mui-mapbox-geocoder"
   },
-  "main": "src/index.js",
+  "main": "dist/bundle.js",
   "files": [
     "dist"
   ],
