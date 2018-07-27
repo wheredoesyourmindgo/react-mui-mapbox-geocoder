@@ -1,0 +1,18 @@
+{
+  "presets": [
+    "stage-1",
+    "flow",
+    "react",
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ]
+  ],
+  "plugins": [
+    "flow-react-proptypes",
+    "external-helpers",
+    "transform-class-properties"
+  ]
+}
