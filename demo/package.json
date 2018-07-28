@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3-ease": "^1.0.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-map-gl": "^3.3.2",
-    "react-mui-mapbox-geocoder": "^0.1.9",
+    "react-mui-mapbox-geocoder": "^0.1.10",
     "react-scripts": "1.1.4"
   },
   "scripts": {

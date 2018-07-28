@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
-import MapGL, {NavigationControl} from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
+import {easeCubic} from 'd3-ease';
 import MatGeocoder from 'react-mui-mapbox-geocoder';
 // import MatGeocoder from 'react-mui-mapbox-geocoder-src/MatGeocoder';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+const geocoderApiOptions = {
+  country: 'us',
+  proximity: {longitude: -121.0681, latitude: 38.9197},
+  bbox: [-123.8501, 38.08, -117.5604, 39.8735]
+};
 
 class Demo extends Component {
   state = {
@@ -13,6 +20,19 @@ class Demo extends Component {
       longitude: -122.4376,
       zoom: 8
     }
+  };
+
+  _handleGeocoderSelect = (result) => {
+    const viewport = {
+      ...this.state.viewport,
+      longitude: result.center[0],
+      latitude: result.center[1],
+      zoom: 18,
+      transitionDuration: 4000,
+      transitionInterpolator: new FlyToInterpolator(),
+      transitionEasing: easeCubic
+    };
+    this._onViewportChange(viewport);
   };
 
   _onViewportChange = (viewport) => {
@@ -29,6 +49,14 @@ class Demo extends Component {
         <div style={{position: 'absolute', left: 10, bottom: 10}}>
           <NavigationControl onViewportChange={this._onViewportChange} />
         </div>
+
+        <MatGeocoder
+          inputPlaceholder="Search Address"
+          accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+          onSelect={(result) => this._handleGeocoderSelect(result)}
+          showLoader={true}
+          {...geocoderApiOptions}
+        />
       </MapGL>
     );
   }
