@@ -16,7 +16,7 @@ and
 
 ### it looks like this...
 
-![What does this component look like?](https://raw.githubusercontent.com/wheredoesyourmindgo/react-mui-mapbox-geocoder/master/what-does-this-look-like.gif)
+![What does this component look like?](https://raw.githubusercontent.com/wheredoesyourmindgo/react-mui-mapbox-geocoder/master/what-this-looks-like.gif)
 
 ## How Can I Use It?
 
