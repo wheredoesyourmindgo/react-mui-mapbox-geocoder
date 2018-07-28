@@ -10,7 +10,7 @@ A Material UI Autosuggest'ing Mapbox Geocoder for locating addresses and points 
 
 and
 
-[Material-UI & Autosuggest](https://material-ui.com/demos/autocomplete/#react-autosuggest)
+[material-ui & react-autosuggest](https://material-ui.com/demos/autocomplete/#react-autosuggest)
 
 ## What Does This Component Look Like?
 
