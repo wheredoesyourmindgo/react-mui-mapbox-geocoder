@@ -2009,6 +2009,10 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+d3-ease@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/d3-ease/-/d3-ease-1.0.3.tgz#68bfbc349338a380c44d8acc4fbc3304aa2d8c0e"
+
 d@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.0.tgz#754bb5bfe55451da69a58b94d45f4c5b0462d58f"
@@ -6143,9 +6147,9 @@ react-map-gl@^3.3.2:
     prop-types "^15.5.7"
     viewport-mercator-project "^5.1.0"
 
-react-mui-mapbox-geocoder@^0.1.9:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.1.9.tgz#7994f746caf68a9e8683e9b4dfc434d5e68c164a"
+react-mui-mapbox-geocoder@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.1.10.tgz#096b162609eaeee144e0b5e2c5323366d38d6060"
   dependencies:
     "@material-ui/core" "^1.4.1"
     "@material-ui/icons" "^2.0.0"
