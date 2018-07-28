@@ -16,7 +16,7 @@ and
 
 ### it looks like this...
 
-![What does this component look like?](https://raw.githubusercontent.com/wheredoesyourmindgo/react-mui-mapbox-geocoder/master/what-this-looks-like.gif)
+![What does this component look like?](https://raw.githubusercontent.com/wheredoesyourmindgo/react-mui-mapbox-geocoder/master/what-does-this-look-like.gif)
 
 ## How Can I Use It?
 
@@ -53,26 +53,9 @@ return (
 
 ```
 
-  accessToken=required string
-  onSelect=required function
-  onSuggest=optional function
-  source=optional string, default 'mapbox.places'
-  endpoint=optional string, default 'http://api.tiles.mapbox.com'
-  inputClass=optional string, default ''
-  inputPlaceholder=optional string, default 'Search'
-  resultClass=optional string, default ''
-  resultsClass=optional string, default ''
-  showLoader=optional string, default ''
-  inputPosition=optional string, default 'top', can be 'bottom'
-  resultFocusClass=optional string, default 'strong'
-  proximity=optional string, default '',
-  bbox=optional string, default '',
-  types=optional string, default '',
-  focusOnMount=optional bool, default true
-
 ## Are There Any Other Props I Can Pass?
 
-### Yes. See [Mapbox API Docs](https://www.mapbox.com/api-documentation/#request-format) for more information.
+### Yes.
 
     endpoint: string, default "'https://api.mapbox.com'"
     source: string, default "'mapbox.places'"
@@ -89,6 +72,8 @@ return (
     focusOnMount: boolean, default "false"
     onSelect: (required), (selectedFeature) => {...},
     onSuggest: (optional), (suggestedResults) => {...}
+
+See [Mapbox API Docs](https://www.mapbox.com/api-documentation/#request-format) for more information.
 
 ## Elon Musk Thinks We Are Living In A Simulation. Is This True?
 
