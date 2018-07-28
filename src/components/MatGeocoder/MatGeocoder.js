@@ -105,7 +105,7 @@ class MatGeocoder extends React.Component<Props, State> {
   static defaultProps = {
     endpoint: 'https://api.mapbox.com',
     inputPlaceholder: 'Search',
-    showLoader: false,
+    showLoader: true,
     source: 'mapbox.places',
     onSuggest: () => {},
     focusOnMount: false
@@ -128,9 +128,10 @@ class MatGeocoder extends React.Component<Props, State> {
 
   renderInput = (inputProps) => {
     const {classes, ref, ...other} = inputProps;
+    const {showLoader} = this.props;
     return (
       <React.Fragment>
-        <DebouncedProgressBar show={this.state.loading} />
+        <DebouncedProgressBar show={this.state.loading && showLoader} />
         <Paper square={false} elevation={1} className={classes.inputContainer}>
           <Grid container alignItems="center" spacing={8} wrap="nowrap">
             <Grid
