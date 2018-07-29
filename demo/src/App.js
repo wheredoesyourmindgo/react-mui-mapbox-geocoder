@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
 import MatGeocoder from 'react-mui-mapbox-geocoder';
-// import MatGeocoder from 'react-mui-mapbox-geocoder-src/MatGeocoder';
+// import for use with developing component from copy of source.
+// import MatGeocoder from './lib/MatGeocoder/MatGeocoder';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import './App.css';
 
 const geocoderApiOptions = {
   country: 'us',
@@ -41,23 +43,29 @@ class Demo extends Component {
 
   render() {
     return (
-      <MapGL
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-        {...this.state.viewport}
-        onViewportChange={this._onViewportChange}
-      >
-        <div style={{position: 'absolute', left: 10, bottom: 10}}>
-          <NavigationControl onViewportChange={this._onViewportChange} />
-        </div>
+      <div className="App">
+        <MapGL
+          {...this.state.viewport}
+          mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+          onViewportChange={this._onViewportChange}
+        >
+          <div className="navControls">
+            <NavigationControl onViewportChange={this._onViewportChange} />
+          </div>
 
-        <MatGeocoder
-          inputPlaceholder="Search Address"
-          accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
-          onSelect={(result) => this._handleGeocoderSelect(result)}
-          showLoader={true}
-          {...geocoderApiOptions}
-        />
-      </MapGL>
+          <div className="geocoder">
+            <MatGeocoder
+              inputPlaceholder="Search Address"
+              accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+              onSelect={(result) => this._handleGeocoderSelect(result)}
+              showLoader={true}
+              {...geocoderApiOptions}
+              inputPaperProps={{square: true}}
+              suggestionsPaperProps={{square: true}}
+            />
+          </div>
+        </MapGL>
+      </div>
     );
   }
 }

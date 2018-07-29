@@ -1,0 +1,13 @@
+.App .geocoder {
+  z-index: 4;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 300px;
+  max-width: calc(100% - 20px);
+}
+.App .navControls {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+}

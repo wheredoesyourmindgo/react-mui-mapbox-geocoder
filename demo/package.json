@@ -15,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "link-src": "ln -s \"../src/components/MatGeocoder\" \"./node_modules/react-mui-mapbox-geocoder-src\""
+    "cp-src": "cp -R ../src/components/MatGeocoder src/lib"
   },
   "devDependencies": {}
 }
