@@ -35,7 +35,9 @@ type Props = {
   showLoader: boolean,
   focusOnMount: boolean,
   onSelect: (param: any) => void,
-  onSuggest?: (results: Array<any>) => void
+  onSuggest?: (results: Array<any>) => void,
+  inputPaperProps: any, // override input container props
+  suggestionsPaperProps: any // override suggestions container props
 };
 
 type State = {|
@@ -128,11 +130,16 @@ class MatGeocoder extends React.Component<Props, State> {
 
   renderInput = (inputProps) => {
     const {classes, ref, ...other} = inputProps;
-    const {showLoader} = this.props;
+    const {showLoader, inputPaperProps} = this.props;
     return (
       <React.Fragment>
         <DebouncedProgressBar show={this.state.loading && showLoader} />
-        <Paper square={false} elevation={1} className={classes.inputContainer}>
+        <Paper
+          square={false}
+          elevation={1}
+          className={classes.inputContainer}
+          {...inputPaperProps}
+        >
           <Grid container alignItems="center" spacing={8} wrap="nowrap">
             <Grid
               item
@@ -177,6 +184,21 @@ class MatGeocoder extends React.Component<Props, State> {
           </Grid>
         </Paper>
       </React.Fragment>
+    );
+  };
+
+  renderSuggestionsContainer = (options) => {
+    const {containerProps, children} = options;
+    const {suggestionsPaperProps} = this.props;
+    return (
+      <Paper
+        {...containerProps}
+        square={false}
+        elevation={4}
+        {...suggestionsPaperProps}
+      >
+        {children}
+      </Paper>
     );
   };
 
@@ -279,7 +301,7 @@ class MatGeocoder extends React.Component<Props, State> {
         onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
         onSuggestionSelected={this.handleSuggestionSelected}
-        renderSuggestionsContainer={renderSuggestionsContainer}
+        renderSuggestionsContainer={this.renderSuggestionsContainer}
         getSuggestionValue={getResultValue}
         renderSuggestion={renderSuggestion}
         inputProps={{
@@ -341,15 +363,6 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
         })}
       </Typography>
     </MenuItem>
-  );
-}
-
-function renderSuggestionsContainer(options) {
-  const {containerProps, children} = options;
-  return (
-    <Paper {...containerProps} square={false} elevation={4}>
-      {children}
-    </Paper>
   );
 }
 
