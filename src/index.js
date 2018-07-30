@@ -1,4 +1,4 @@
 // @flow
-import MatGeocoder from './components/MatGeocoder/MatGeocoder';
+import MatGeocoder from './MatGeocoder/MatGeocoder';
 
 export default MatGeocoder;
