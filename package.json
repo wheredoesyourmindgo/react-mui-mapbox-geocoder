@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup -c",
+    "build:rollup": "rollup -c",
+    "build:babel": "babel -d dist/src/ src/",
+    "build": "npm run build:rollup && npm run build:babel",
     "preversion": "npm run build"
   },
   "keywords": [
