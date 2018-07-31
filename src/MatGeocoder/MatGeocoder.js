@@ -36,8 +36,8 @@ type Props = {
   focusOnMount: boolean,
   onSelect: (param: any) => void,
   onSuggest?: (results: Array<any>) => void,
-  inputPaperProps: any, // override input container props
-  suggestionsPaperProps: any // override suggestions container props
+  inputPaperProps?: any, // override input container props
+  suggestionsPaperProps?: any // override suggestions container props
 };
 
 type State = {|
