@@ -285,9 +285,9 @@ class MatGeocoder extends React.Component<Props, State> {
   };
 
   render() {
-    const {classes, inputPlaceholder} = this.props;
+    const {classes, inputPlaceholder, accessToken} = this.props;
 
-    return (
+    return accessToken ? (
       <Autosuggest
         ref={this.storeInputReference}
         theme={{
@@ -311,7 +311,7 @@ class MatGeocoder extends React.Component<Props, State> {
           onChange: this.handleChange
         }}
       />
-    );
+    ) : null;
   }
 
   handleSuggestionsClearRequested = () => {
