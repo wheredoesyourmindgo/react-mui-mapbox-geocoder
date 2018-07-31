@@ -6120,8 +6120,8 @@ react-map-gl@^3.3.2:
     viewport-mercator-project "^5.1.0"
 
 react-mui-mapbox-geocoder@^0.1.10:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.1.14.tgz#64f3dc0421cd84460a33f124fb5815baf9780e66"
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.1.15.tgz#be76b87ace2d0a27a8f1a075fb990a063049df8b"
   dependencies:
     "@material-ui/core" "^1.4.1"
     "@material-ui/icons" "^2.0.0"
