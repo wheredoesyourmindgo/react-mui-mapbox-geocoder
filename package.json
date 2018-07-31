@@ -6,15 +6,15 @@
     "type": "git",
     "url": "https://github.com/wheredoesyourmindgo/react-mui-mapbox-geocoder"
   },
-  "main": "dist/bundle.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:rollup": "rollup -c",
-    "build:babel": "babel -d dist/src/ src/",
-    "build": "npm run build:rollup && npm run build:babel",
+    "start": "rollup -c -w",
+    "build": "rollup -c",
     "preversion": "npm run build"
   },
   "keywords": [
