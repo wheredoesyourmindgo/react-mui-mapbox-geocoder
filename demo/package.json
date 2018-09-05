@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.0.2",
+    "@material-ui/icons": "^3.0.1",
     "d3-ease": "^1.0.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
     "react-map-gl": "^3.3.2",
-    "react-mui-mapbox-geocoder": "^0.1.10",
-    "react-scripts": "1.1.4"
+    "react-mui-mapbox-geocoder": "^0.2.0",
+    "react-scripts": "^1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
