@@ -349,7 +349,7 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
 
   return (
     <MenuItem selected={isHighlighted} component="div">
-      <Typography noWrap variant="subheading">
+      <Typography noWrap variant="subtitle1">
         {parts.map((part, index) => {
           return part.highlight ? (
             <span key={String(index)} style={{fontWeight: 500}}>
