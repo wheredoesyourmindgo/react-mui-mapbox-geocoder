@@ -11,7 +11,7 @@
     "react-dom": "^16.4.2",
     "react-map-gl": "^3.3.2",
     "react-mui-mapbox-geocoder": "^0.2.0",
-    "react-scripts": "^1.1.5"
+    "react-scripts": "^2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,5 +20,11 @@
     "eject": "react-scripts eject",
     "cp-src": "cp -R ../src/MatGeocoder src/lib"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
