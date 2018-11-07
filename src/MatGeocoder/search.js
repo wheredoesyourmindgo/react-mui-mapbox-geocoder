@@ -1,6 +1,5 @@
 // @flow
-import axios from 'axios';
-import type {$AxiosXHR} from 'axios';
+import fetch from 'isomorphic-unfetch';
 import omitBy from 'lodash.omitby';
 import isNil from 'lodash.isnil';
 
@@ -9,7 +8,7 @@ export const search = async (
   source: string,
   accessToken: string,
   query: string,
-  onResult?: (err: any, res: ?$AxiosXHR<any>, searchTime: Date) => void,
+  onResult?: (err: any, res: ?Response, searchTime: Date) => void,
   proximity?: {longitude: number, latitude: number},
   country?: string,
   bbox?: Array<number>,
@@ -20,7 +19,7 @@ export const search = async (
 ) => {
   const searchTime = new Date();
   try {
-    const uri = `${endpoint}/geocoding/v5/${source}/${query}.json`;
+    const baseUrl = `${endpoint}/geocoding/v5/${source}/${query}.json`;
     // Don't send empty query params to Mapbox geocoding api.
     const searchParams = omitBy(
       {
@@ -38,13 +37,21 @@ export const search = async (
       },
       isNil
     );
-    const res = await axios.get(uri, {
-      params: searchParams
-    });
-    onResult && onResult(null, res, searchTime);
+    const url = `${baseUrl}?${toUrlString(searchParams)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    onResult && onResult(null, data, searchTime);
     return {err: null, res, searchTime};
   } catch (err) {
     onResult && onResult(err, null, searchTime);
     return {err, res: null, searchTime};
   }
 };
+
+function toUrlString(params) {
+  return Object.keys(params)
+    .map(
+      (key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+    )
+    .join('&');
+}

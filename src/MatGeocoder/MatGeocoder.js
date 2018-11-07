@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import {search} from './search';
-import type {$AxiosXHR} from 'axios';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -247,22 +246,16 @@ class MatGeocoder extends React.Component<Props, State> {
     }
   };
 
-  onResult = (err: any, res: ?$AxiosXHR<any>, searchTime: Date) => {
+  onResult = (err: any, fc: any, searchTime: Date) => {
     const {onSuggest} = this.props;
     // searchTime is compared with the last search to set the state
     // to ensure that a slow xhr response does not scramble the
     // sequence of autocomplete display.
-    if (
-      !err &&
-      res &&
-      res.data &&
-      res.data.features &&
-      this.state.searchTime <= searchTime
-    ) {
+    if (!err && fc && fc.features && this.state.searchTime <= searchTime) {
       this.setState({
         searchTime: searchTime,
         loading: false,
-        results: res.data.features
+        results: fc.features
           .map((feature) => ({
             feature: feature,
             label: feature.place_name
