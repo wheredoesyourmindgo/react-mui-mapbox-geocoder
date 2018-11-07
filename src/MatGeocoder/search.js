@@ -1,7 +1,10 @@
 // @flow
 import fetch from 'isomorphic-unfetch';
+import es6promise from 'es6-promise';
 import omitBy from 'lodash.omitby';
 import isNil from 'lodash.isnil';
+
+es6promise.polyfill();
 
 export const search = async (
   endpoint: string,
