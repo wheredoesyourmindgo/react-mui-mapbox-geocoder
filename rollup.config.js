@@ -24,7 +24,7 @@ export default {
   external: [
     'autosuggest-highlight/match',
     'autosuggest-highlight/parse',
-    'axios',
+    'isomorphic-unfetch',
     'classnames',
     'lodash.isnil',
     'lodash.omitby',
