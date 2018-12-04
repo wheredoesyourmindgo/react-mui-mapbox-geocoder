@@ -34,7 +34,7 @@ type Props = {
   showLoader: boolean,
   focusOnMount: boolean,
   onSelect: (param: any) => void,
-  onSuggest?: (results: Array<any>) => void,
+  onSuggest: (results: Array<any>) => void,
   inputPaperProps?: any, // override input container props
   suggestionsPaperProps?: any // override suggestions container props
 };
@@ -262,7 +262,7 @@ class MatGeocoder extends React.Component<Props, State> {
           }))
           .filter((feature) => feature.label)
       });
-      onSuggest && onSuggest(this.state.results);
+      onSuggest(this.state.results);
     }
   };
 

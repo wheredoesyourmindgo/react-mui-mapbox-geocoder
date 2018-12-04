@@ -11,7 +11,7 @@ export const search = async (
   source: string,
   accessToken: string,
   query: string,
-  onResult?: (err: any, res: ?Response, searchTime: Date) => void,
+  onResult: (err: any, res: ?Response, searchTime: Date) => void,
   proximity?: {longitude: number, latitude: number},
   country?: string,
   bbox?: Array<number>,
@@ -43,10 +43,10 @@ export const search = async (
     const url = `${baseUrl}?${toUrlString(searchParams)}`;
     const res = await fetch(url);
     const data = await res.json();
-    onResult && onResult(null, data, searchTime);
+    onResult(null, data, searchTime);
     return {err: null, res, searchTime};
   } catch (err) {
-    onResult && onResult(err, null, searchTime);
+    onResult(err, null, searchTime);
     return {err, res: null, searchTime};
   }
 };
