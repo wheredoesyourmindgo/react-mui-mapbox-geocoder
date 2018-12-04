@@ -349,7 +349,7 @@ function getResultValue(result) {
   return result.label;
 }
 
-matGeocoder.propTypes = {
+MatGeocoder.propTypes = {
   classes: PropTypes.any,
   endpoint: PropTypes.string,
   source: PropTypes.string,
