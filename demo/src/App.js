@@ -3,7 +3,7 @@ import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
 // import MatGeocoder from 'react-mui-mapbox-geocoder';
 // import for use with developing component from copy of source.
-import MatGeocoder from './lib/MatGeocoder';
+import MatGeocoder from './lib/MatGeocoder/MatGeocoder';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './App.css';
 

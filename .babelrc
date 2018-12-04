@@ -1,5 +1,6 @@
 {
   "presets": [
+    "@babel/preset-flow",
     "@babel/preset-react",
     [
       "@babel/preset-env",
@@ -9,6 +10,7 @@
     ]
   ],
   "plugins": [
+    "flow-react-proptypes",
     [
       "@babel/plugin-transform-runtime",
       {
