@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import {search} from './search';
 import Autosuggest from 'react-autosuggest';
@@ -17,34 +16,17 @@ import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import classNames from 'classnames';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
+import PropTypes from 'prop-types';
 
-type Props = {
-  classes: any,
-  endpoint: string,
-  source: string,
-  inputPlaceholder: string,
-  accessToken: string,
-  proximity?: {longitude: number, latitude: number},
-  country?: string,
-  bbox?: Array<number>,
-  types?: string,
-  limit?: number,
-  autocomplete?: boolean,
-  language?: string,
-  showLoader: boolean,
-  focusOnMount: boolean,
-  onSelect: (param: any) => void,
-  onSuggest?: (results: Array<any>) => void,
-  inputPaperProps?: any, // override input container props
-  suggestionsPaperProps?: any // override suggestions container props
-};
-
-type State = {|
-  results: Array<any>,
-  loading: boolean,
-  searchTime: Date,
-  value: string
-|};
+/**
+ * Component State
+ * @typedef {Object} State
+ * @property {*[]} results
+ * @property {boolean} loading
+ * @property {Date} searchTime
+ * @property {string} value
+ *
+ */
 
 const matStyles = (theme) => ({
   container: {
@@ -102,24 +84,17 @@ const matStyles = (theme) => ({
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-class MatGeocoder extends React.Component<Props, State> {
-  static defaultProps = {
-    endpoint: 'https://api.mapbox.com',
-    inputPlaceholder: 'Search',
-    showLoader: true,
-    source: 'mapbox.places',
-    onSuggest: () => {},
-    focusOnMount: false
-  };
-
-  state: State = {
+class MatGeocoder extends React.Component {
+  /** @type {State} */
+  state = {
     results: [],
     loading: false,
     searchTime: new Date(),
     value: ''
   };
 
-  input: HTMLInputElement;
+  /** @type {HTMLInputElement} */
+  input;
 
   storeInputReference = (autosuggest) => {
     if (autosuggest != null) {
@@ -234,19 +209,24 @@ class MatGeocoder extends React.Component<Props, State> {
         source,
         accessToken,
         value,
-        this.onResult,
         proximity,
         country,
         bbox,
         types,
         limit,
         autocomplete,
-        language
+        language,
+        this.onResult
       );
     }
   };
 
-  onResult = (err: any, fc: any, searchTime: Date) => {
+  /**
+   * @param {*} err - Error Object.
+   * @param {Object} fc - GeoJSON feature class as FeatureCollection.
+   * @param {Date} fc - Search time as Date.
+   */
+  onResult = (err, fc, searchTime) => {
     const {onSuggest} = this.props;
     // searchTime is compared with the last search to set the state
     // to ensure that a slow xhr response does not scramble the
@@ -262,7 +242,7 @@ class MatGeocoder extends React.Component<Props, State> {
           }))
           .filter((feature) => feature.label)
       });
-      onSuggest && onSuggest(this.state.results);
+      onSuggest(this.state.results);
     }
   };
 
@@ -328,7 +308,13 @@ class MatGeocoder extends React.Component<Props, State> {
   };
 }
 
-function hexOpacity(color: string, transparency: string): string {
+/**
+ *
+ * @param {string} color
+ * @param {string} transparency
+ * @returns {string}
+ */
+function hexOpacity(color, transparency) {
   color = color.replace(/#/g, '');
   if (color.length === 3) {
     color = color + color;
@@ -362,5 +348,38 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
 function getResultValue(result) {
   return result.label;
 }
+
+matGeocoder.propTypes = {
+  classes: PropTypes.any,
+  endpoint: PropTypes.string,
+  source: PropTypes.string,
+  inputPlaceholder: PropTypes.string,
+  accessToken: PropTypes.string.isRequired,
+  proximity: PropTypes.exact({
+    longitude: PropTypes.number,
+    latitude: PropTypes.number
+  }),
+  country: PropTypes.string,
+  bbox: PropTypes.arrayOf(PropTypes.number),
+  types: PropTypes.string,
+  limit: PropTypes.number,
+  autocomplete: PropTypes.bool,
+  language: PropTypes.string,
+  showLoader: PropTypes.bool,
+  focusOnMount: PropTypes.bool,
+  onSelect: PropTypes.func,
+  onSuggest: PropTypes.func,
+  inputPaperProps: PropTypes.any, // override input container props
+  suggestionsPaperProps: PropTypes.any // override suggestions container props
+};
+
+MatGeocoder.defaultProps = {
+  endpoint: 'https://api.mapbox.com',
+  inputPlaceholder: 'Search',
+  showLoader: true,
+  source: 'mapbox.places',
+  onSuggest: () => {},
+  focusOnMount: false
+};
 
 export default withStyles(matStyles)(MatGeocoder);
