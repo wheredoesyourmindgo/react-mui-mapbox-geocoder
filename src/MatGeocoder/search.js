@@ -1,3 +1,4 @@
+// @flow
 import fetch from 'isomorphic-unfetch';
 import es6promise from 'es6-promise';
 import omitBy from 'lodash.omitby';
@@ -5,50 +6,19 @@ import isNil from 'lodash.isnil';
 
 es6promise.polyfill();
 
-/**
- * Proximity Object that contains longitude and latitude properties.
- * @typedef {Object} Proximity
- * @property {number} longitude
- * @property {number} latitude
- */
-
-/**
- * On result handler callback Function.
- * @callback onResultCallback
- * @param {Object} err - Error Object.
- * @param {Object} res - Response Object.
- * @param {Date} searchTime - Search time as Date.
- * @returns {void}
- */
-
-/**
- *
- * @param {string} endpoint
- * @param {string} source
- * @param {string} accessToken
- * @param {string} query
- * @param {Proximity} [proximity]
- * @param {string} [country]
- * @param {number[]} [bbox]
- * @param {string} [types]
- * @param {number} [limit]
- * @param {boolean} [autocomplete]
- * @param {string} [language]
- * @param {onResultCallback} [onResult] - The callback that handles the result.
- */
 export const search = async (
-  endpoint,
-  source,
-  accessToken,
-  query,
-  proximity,
-  country,
-  bbox,
-  types,
-  limit,
-  autocomplete,
-  language,
-  onResult = () => {}
+  endpoint: string,
+  source: string,
+  accessToken: string,
+  query: string,
+  onResult?: (err: any, res: ?Response, searchTime: Date) => void,
+  proximity?: {longitude: number, latitude: number},
+  country?: string,
+  bbox?: Array<number>,
+  types?: string,
+  limit?: number,
+  autocomplete?: boolean,
+  language?: string
 ) => {
   const searchTime = new Date();
   try {
@@ -70,23 +40,18 @@ export const search = async (
       },
       isNil
     );
-    const url = `${baseUrl}?${stringify(searchParams)}`;
+    const url = `${baseUrl}?${toUrlString(searchParams)}`;
     const res = await fetch(url);
     const data = await res.json();
-    onResult(null, data, searchTime);
+    onResult && onResult(null, data, searchTime);
     return {err: null, res, searchTime};
   } catch (err) {
-    onResult(err, null, searchTime);
+    onResult && onResult(err, null, searchTime);
     return {err, res: null, searchTime};
   }
 };
 
-/**
- *
- * @param {Object} params - Object containing key/value pairs for query parameters.
- * @returns {string}
- */
-function stringify(params) {
+function toUrlString(params) {
   return Object.keys(params)
     .map(
       (key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
