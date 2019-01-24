@@ -1,6 +1,6 @@
 {
   "name": "react-mui-mapbox-geocoder",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "A Material UI Autosuggest'ing Mapbox Geocoder for locating addresses and points of interest.",
   "repository": {
     "type": "git",
