@@ -35,6 +35,8 @@ type Props = {
   focusOnMount: boolean,
   onSelect: (param: any) => void,
   onSuggest: (results: Array<any>) => void,
+  onInputBlur?: (event: any) => void,
+  onInputFocus?: (event: any) => void,
   inputClasses?: any, // Override css classes to input.
   inputPaperProps?: any, // Override input container props.
   suggestionsPaperProps?: any // Override suggestions container props.
@@ -193,10 +195,12 @@ class MatGeocoder extends React.Component<Props, State> {
 
   focusInputHandler = (e) => {
     this.setState({inputIsFocused: true});
+    this.props.onInputFocus && this.props.onInputFocus(e);
   };
 
   blurInputHandler = (e) => {
     this.setState({inputIsFocused: false});
+    this.props.onInputBlur && this.props.onInputBlur(e);
   };
 
   renderSuggestionsContainer = (options) => {
