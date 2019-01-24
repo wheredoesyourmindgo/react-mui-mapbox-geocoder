@@ -35,15 +35,17 @@ type Props = {
   focusOnMount: boolean,
   onSelect: (param: any) => void,
   onSuggest: (results: Array<any>) => void,
-  inputPaperProps?: any, // override input container props
-  suggestionsPaperProps?: any // override suggestions container props
+  inputClasses?: any, // Override css classes to input.
+  inputPaperProps?: any, // Override input container props.
+  suggestionsPaperProps?: any // Override suggestions container props.
 };
 
 type State = {|
   results: Array<any>,
   loading: boolean,
   searchTime: Date,
-  value: string
+  value: string,
+  inputIsFocused: boolean
 |};
 
 const matStyles = (theme) => ({
@@ -74,7 +76,7 @@ const matStyles = (theme) => ({
     paddingLeft: theme.spacing.unit * 2,
     backgroundColor: hexOpacity(theme.palette.background.paper, 'E6'),
     overflow: 'hidden',
-    '&:hover,&:focus-within,&:active': {
+    '&:hover,&:active,&.inputContainerFocused': {
       backgroundColor: theme.palette.background.paper
     },
     // Maintain a consistent height when IconButton (CancelIcon) is visible.
@@ -116,7 +118,8 @@ class MatGeocoder extends React.Component<Props, State> {
     results: [],
     loading: false,
     searchTime: new Date(),
-    value: ''
+    value: '',
+    inputIsFocused: false
   };
 
   input: HTMLInputElement;
@@ -128,7 +131,7 @@ class MatGeocoder extends React.Component<Props, State> {
   };
 
   renderInput = (inputProps) => {
-    const {classes, ref, ...other} = inputProps;
+    const {classes, ref, inputClasses, ...other} = inputProps;
     const {showLoader, inputPaperProps} = this.props;
     return (
       <React.Fragment>
@@ -136,7 +139,9 @@ class MatGeocoder extends React.Component<Props, State> {
         <Paper
           square={false}
           elevation={1}
-          className={classes.inputContainer}
+          className={classNames(classes.inputContainer, {
+            inputContainerFocused: this.state.inputIsFocused
+          })}
           {...inputPaperProps}
         >
           <Grid container alignItems="center" spacing={8} wrap="nowrap">
@@ -155,7 +160,7 @@ class MatGeocoder extends React.Component<Props, State> {
                     </InputAdornment>
                   ),
                   classes: {
-                    input: classes.input
+                    ...inputClasses
                   },
                   ...other
                 }}
@@ -184,6 +189,14 @@ class MatGeocoder extends React.Component<Props, State> {
         </Paper>
       </React.Fragment>
     );
+  };
+
+  focusInputHandler = (e) => {
+    this.setState({inputIsFocused: true});
+  };
+
+  blurInputHandler = (e) => {
+    this.setState({inputIsFocused: false});
   };
 
   renderSuggestionsContainer = (options) => {
@@ -278,7 +291,7 @@ class MatGeocoder extends React.Component<Props, State> {
   };
 
   render() {
-    const {classes, inputPlaceholder, accessToken} = this.props;
+    const {classes, inputPlaceholder, accessToken, inputClasses} = this.props;
 
     return accessToken ? (
       <Autosuggest
@@ -301,7 +314,10 @@ class MatGeocoder extends React.Component<Props, State> {
           classes,
           placeholder: inputPlaceholder,
           value: this.state.value,
-          onChange: this.handleChange
+          onChange: this.handleChange,
+          onFocus: this.focusInputHandler,
+          onBlur: this.blurInputHandler,
+          inputClasses
         }}
       />
     ) : null;
