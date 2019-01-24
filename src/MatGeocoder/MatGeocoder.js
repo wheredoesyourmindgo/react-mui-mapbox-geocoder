@@ -161,11 +161,9 @@ class MatGeocoder extends React.Component<Props, State> {
                       <SearchIcon color="action" />
                     </InputAdornment>
                   ),
-                  classes: {
-                    ...inputClasses
-                  },
                   ...other
                 }}
+                classes={inputClasses}
               />
             </Grid>
             {/* Unmount and mount releases space for TexField to grow AND show animation. */}
