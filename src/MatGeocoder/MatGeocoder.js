@@ -39,7 +39,9 @@ type Props = {
   onInputFocus?: (event: any) => void,
   inputClasses?: any, // Override css classes to input.
   inputPaperProps?: any, // Override input container props.
-  suggestionsPaperProps?: any // Override suggestions container props.
+  suggestionsPaperProps?: any, // Override suggestions container props.
+  inputTextFieldProps?: any,
+  showInputContainer: boolean
 };
 
 type State = {|
@@ -113,7 +115,8 @@ class MatGeocoder extends React.Component<Props, State> {
     showLoader: true,
     source: 'mapbox.places',
     onSuggest: () => {},
-    focusOnMount: false
+    focusOnMount: false,
+    showInputContainer: true
   };
 
   state: State = {
@@ -132,10 +135,28 @@ class MatGeocoder extends React.Component<Props, State> {
     }
   };
 
-  renderInput = (inputProps) => {
-    const {classes, ref, inputClasses, ...other} = inputProps;
-    const {showLoader, inputPaperProps} = this.props;
-    return (
+  renderInput = (renderInputProps) => {
+    const {classes, ref, inputClasses, ...other} = renderInputProps;
+    const {showLoader, inputPaperProps, inputTextFieldProps} = this.props;
+
+    const inputTextField = (
+      <TextField
+        fullWidth
+        InputProps={{
+          inputRef: ref,
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon color="action" />
+            </InputAdornment>
+          ),
+          classes: inputClasses,
+          ...other
+        }}
+        {...inputTextFieldProps}
+      />
+    );
+
+    return this.props.showInputContainer ? (
       <React.Fragment>
         <DebouncedProgressBar show={this.state.loading && showLoader} />
         <Paper
@@ -152,19 +173,7 @@ class MatGeocoder extends React.Component<Props, State> {
               xs
               className={classNames(classes.grow, classes.noShrink)}
             >
-              <TextField
-                fullWidth
-                InputProps={{
-                  inputRef: ref,
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon color="action" />
-                    </InputAdornment>
-                  ),
-                  classes: inputClasses,
-                  ...other
-                }}
-              />
+              {inputTextField}
             </Grid>
             {/* Unmount and mount releases space for TexField to grow AND show animation. */}
             <Fade
@@ -188,6 +197,8 @@ class MatGeocoder extends React.Component<Props, State> {
           </Grid>
         </Paper>
       </React.Fragment>
+    ) : (
+      <React.Fragment>{inputTextField}</React.Fragment>
     );
   };
 
