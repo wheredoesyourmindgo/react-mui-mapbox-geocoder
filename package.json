@@ -34,6 +34,7 @@
     "@babel/runtime": "^7.3.4",
     "autosuggest-highlight": "^3.1.1",
     "classnames": "^2.2.6",
+    "color-alpha": "^1.0.3",
     "es6-promise": "^4.2.6",
     "isomorphic-unfetch": "^3.0.0",
     "lodash.isnil": "^4.0.0",
