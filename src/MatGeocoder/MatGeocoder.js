@@ -1,5 +1,5 @@
 // @flow
-import * as React from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {search} from './search';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -17,6 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
 import classNames from 'classnames';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
+import alpha from 'color-alpha';
 
 type Props = {
   classes: any,
@@ -41,16 +42,8 @@ type Props = {
   inputPaperProps?: any, // Override input container props.
   suggestionsPaperProps?: any, // Override suggestions container props.
   inputTextFieldProps?: any,
-  showInputContainer: boolean
+  showInputContainer?: boolean
 };
-
-type State = {|
-  results: Array<any>,
-  loading: boolean,
-  searchTime: Date,
-  value: string,
-  inputIsFocused: boolean
-|};
 
 const matStyles = (theme) => ({
   container: {
@@ -78,7 +71,7 @@ const matStyles = (theme) => ({
     paddingBottom: theme.spacing.unit,
     paddingRight: theme.spacing.unit, // IconButton on right provides sufficient padding
     paddingLeft: theme.spacing.unit * 2,
-    backgroundColor: hexOpacity(theme.palette.background.paper, 'E6'),
+    backgroundColor: alpha(theme.palette.background.paper, 0.9),
     overflow: 'hidden',
     '&:hover,&:active,&.inputContainerFocused': {
       backgroundColor: theme.palette.background.paper
@@ -108,36 +101,55 @@ const matStyles = (theme) => ({
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-class MatGeocoder extends React.Component<Props, State> {
-  static defaultProps = {
-    endpoint: 'https://api.mapbox.com',
-    inputPlaceholder: 'Search',
-    showLoader: true,
-    source: 'mapbox.places',
-    onSuggest: () => {},
-    focusOnMount: false,
-    showInputContainer: true
-  };
+const MatGeocoder = ({
+  proximity,
+  country,
+  bbox,
+  types,
+  limit,
+  autocomplete,
+  language,
+  source,
+  suggestionsPaperProps,
+  classes,
+  showInputContainer,
+  focusOnMount,
+  endpoint,
+  onSuggest,
+  onSelect,
+  accessToken,
+  onInputFocus,
+  onInputBlur,
+  inputPlaceholder,
+  inputClasses,
+  inputTextFieldProps,
+  showLoader,
+  inputPaperProps
+}: Props) => {
+  const [results, setResults] = useState<Array<any>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [searchTime, setSearchTime] = useState<Date>(new Date());
+  const [value, setValue] = useState<string>('');
+  const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
+  useEffect(() => {
+    if (focusOnMount) {
+      focusInput();
+    }
+  }, [focusOnMount]);
+  useEffect(() => {
+    onSuggest && onSuggest(results);
+  }, [results]);
 
-  state: State = {
-    results: [],
-    loading: false,
-    searchTime: new Date(),
-    value: '',
-    inputIsFocused: false
-  };
+  let input: HTMLInputElement;
 
-  input: HTMLInputElement;
-
-  storeInputReference = (autosuggest) => {
+  const storeInputReference = (autosuggest) => {
     if (autosuggest != null) {
-      this.input = autosuggest.input;
+      input = autosuggest.input;
     }
   };
 
-  renderInput = (renderInputProps) => {
+  const renderInput = (renderInputProps) => {
     const {classes, ref, inputClasses, ...other} = renderInputProps;
-    const {showLoader, inputPaperProps, inputTextFieldProps} = this.props;
 
     const inputTextField = (
       <TextField
@@ -156,14 +168,14 @@ class MatGeocoder extends React.Component<Props, State> {
       />
     );
 
-    return this.props.showInputContainer ? (
+    return showInputContainer ? (
       <React.Fragment>
-        <DebouncedProgressBar show={this.state.loading && showLoader} />
+        <DebouncedProgressBar show={loading && showLoader} />
         <Paper
           square={false}
           elevation={1}
           className={classNames(classes.inputContainer, {
-            inputContainerFocused: this.state.inputIsFocused
+            inputContainerFocused: inputIsFocused
           })}
           {...inputPaperProps}
         >
@@ -177,7 +189,7 @@ class MatGeocoder extends React.Component<Props, State> {
             </Grid>
             {/* Unmount and mount releases space for TexField to grow AND show animation. */}
             <Fade
-              in={this.state.value.length > 0}
+              in={value.length > 0}
               unmountOnExit={true}
               mountOnEnter={true}
             >
@@ -188,7 +200,7 @@ class MatGeocoder extends React.Component<Props, State> {
               >
                 <IconButton
                   aria-label="Clear Search Input"
-                  onClick={this.handleClearInput}
+                  onClick={handleClearInput}
                 >
                   <CancelIcon />
                 </IconButton>
@@ -202,19 +214,24 @@ class MatGeocoder extends React.Component<Props, State> {
     );
   };
 
-  focusInputHandler = (e) => {
-    this.setState({inputIsFocused: true});
-    this.props.onInputFocus && this.props.onInputFocus(e);
-  };
+  const focusInputHandler = useCallback(
+    (e) => {
+      setInputIsFocused(true);
+      onInputFocus && onInputFocus(e);
+    },
+    [onInputFocus]
+  );
 
-  blurInputHandler = (e) => {
-    this.setState({inputIsFocused: false});
-    this.props.onInputBlur && this.props.onInputBlur(e);
-  };
+  const blurInputHandler = useCallback(
+    (e) => {
+      setInputIsFocused(false);
+      onInputBlur && onInputBlur(e);
+    },
+    [onInputBlur]
+  );
 
-  renderSuggestionsContainer = (options) => {
+  const renderSuggestionsContainer = (options) => {
     const {containerProps, children} = options;
-    const {suggestionsPaperProps} = this.props;
     return (
       <Paper
         {...containerProps}
@@ -227,40 +244,24 @@ class MatGeocoder extends React.Component<Props, State> {
     );
   };
 
-  focusInput = () => {
-    if (this.input) this.input.focus();
-  };
+  const focusInput = useCallback(() => {
+    if (input) {
+      input.focus();
+    }
+  }, [input]);
 
-  componentDidMount() {
-    if (this.props.focusOnMount) this.focusInput();
-  }
-
-  handleSuggestionsFetchRequested = ({value}) => {
-    const {
-      endpoint,
-      source,
-      accessToken,
-      proximity,
-      country,
-      bbox,
-      types,
-      limit,
-      autocomplete,
-      language
-    } = this.props;
-    this.setState({loading: true});
+  const handleSuggestionsFetchRequested = ({value}) => {
+    setLoading(true);
     if (value === '') {
-      this.setState({
-        results: [],
-        loading: false
-      });
+      setResults([]);
+      setLoading(false);
     } else {
       search(
         endpoint,
         source,
         accessToken,
         value,
-        this.onResult,
+        onResult,
         proximity,
         country,
         bbox,
@@ -272,98 +273,84 @@ class MatGeocoder extends React.Component<Props, State> {
     }
   };
 
-  onResult = (err: any, fc: any, searchTime: Date) => {
-    const {onSuggest} = this.props;
-    // searchTime is compared with the last search to set the state
-    // to ensure that a slow xhr response does not scramble the
-    // sequence of autocomplete display.
-    if (!err && fc && fc.features && this.state.searchTime <= searchTime) {
-      this.setState({
-        searchTime: searchTime,
-        loading: false,
-        results: fc.features
-          .map((feature) => ({
-            feature: feature,
-            label: feature.place_name
-          }))
-          .filter((feature) => feature.label)
-      });
-      onSuggest(this.state.results);
-    }
-  };
+  const onResult = useCallback(
+    (err: any, fc: any, st: Date) => {
+      // searchTime is compared with the last search to set the state
+      // to ensure that a slow xhr response does not scramble the
+      // sequence of autocomplete display.
+      if (!err && fc && fc.features && searchTime <= st) {
+        setSearchTime(st);
+        setLoading(false);
+        setResults(
+          fc.features
+            .map((feature) => ({
+              feature: feature,
+              label: feature.place_name
+            }))
+            .filter((feature) => feature.label)
+        );
+      }
+    },
+    [searchTime]
+  );
 
   /**
    * Parameters Signature:
    * (event, {suggestion, suggestionValue, suggestionIndex, sectionIndex, method})
    */
-  handleSuggestionSelected = (event, {suggestion}) => {
-    this.props.onSelect(suggestion.feature);
-    // focus on the input after click to maintain key traversal
-    // this.inputRef.current && this.inputRef.current.focus()
-    return false;
-  };
+  const handleSuggestionSelected = useCallback(
+    (event, {suggestion}) => {
+      onSelect && onSelect(suggestion.feature);
+      // focus on the input after click to maintain key traversal
+      // this.inputRef.current && this.inputRef.current.focus()
+      return false;
+    },
+    [onSelect]
+  );
 
-  render() {
-    const {classes, inputPlaceholder, accessToken, inputClasses} = this.props;
+  const handleSuggestionsClearRequested = useCallback(() => {
+    setResults([]);
+  }, []);
 
-    return accessToken ? (
-      <Autosuggest
-        ref={this.storeInputReference}
-        theme={{
-          container: classes.container,
-          suggestionsContainerOpen: classes.suggestionsContainerOpen,
-          suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion
-        }}
-        renderInputComponent={this.renderInput}
-        suggestions={this.state.results}
-        onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.handleSuggestionsClearRequested}
-        onSuggestionSelected={this.handleSuggestionSelected}
-        renderSuggestionsContainer={this.renderSuggestionsContainer}
-        getSuggestionValue={getResultValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={{
-          classes,
-          placeholder: inputPlaceholder,
-          value: this.state.value,
-          onChange: this.handleChange,
-          onFocus: this.focusInputHandler,
-          onBlur: this.blurInputHandler,
-          inputClasses
-        }}
-      />
-    ) : null;
-  }
+  const handleChange = useCallback((event, {newValue}) => {
+    setValue(newValue);
+  }, []);
 
-  handleSuggestionsClearRequested = () => {
-    this.setState({
-      results: []
-    });
-  };
-
-  handleChange = (event, {newValue}) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  handleClearInput = () => {
-    this.setState({
-      value: ''
-    });
+  const handleClearInput = useCallback(() => {
+    setValue('');
     // After clear button is clicked the input should be re-focused automatically.
-    this.focusInput();
-  };
-}
+    focusInput();
+  }, []);
 
-function hexOpacity(color: string, transparency: string): string {
-  color = color.replace(/#/g, '');
-  if (color.length === 3) {
-    color = color + color;
-  }
-  return `#${color}${transparency}`;
-}
+  return accessToken ? (
+    <Autosuggest
+      ref={storeInputReference}
+      theme={{
+        container: classes.container,
+        suggestionsContainerOpen: classes.suggestionsContainerOpen,
+        suggestionsList: classes.suggestionsList,
+        suggestion: classes.suggestion
+      }}
+      renderInputComponent={renderInput}
+      suggestions={results}
+      onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
+      onSuggestionsClearRequested={handleSuggestionsClearRequested}
+      onSuggestionSelected={handleSuggestionSelected}
+      renderSuggestionsContainer={renderSuggestionsContainer}
+      getSuggestionValue={getResultValue}
+      renderSuggestion={renderSuggestion}
+      inputProps={{
+        classes,
+        placeholder: inputPlaceholder,
+        value: value,
+        onChange: handleChange,
+        onFocus: focusInputHandler,
+        onBlur: blurInputHandler,
+        inputClasses
+      }}
+    />
+  ) : null;
+};
 
 function renderSuggestion(suggestion, {query, isHighlighted}) {
   const matches = match(suggestion.label, query);
@@ -387,6 +374,16 @@ function renderSuggestion(suggestion, {query, isHighlighted}) {
     </MenuItem>
   );
 }
+
+MatGeocoder.defaultProps = {
+  endpoint: 'https://api.mapbox.com',
+  inputPlaceholder: 'Search',
+  showLoader: true,
+  source: 'mapbox.places',
+  onSuggest: () => {},
+  focusOnMount: false,
+  showInputContainer: true
+};
 
 function getResultValue(result) {
   return result.label;

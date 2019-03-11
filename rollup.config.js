@@ -29,7 +29,8 @@ export default {
     'lodash.isnil',
     'lodash.omitby',
     'react-debounce-render',
-    'react-autosuggest'
+    'react-autosuggest',
+    'color-alpha'
     // 'react',
     // 'prop-types',
     // '@material-ui/core/Fade',
