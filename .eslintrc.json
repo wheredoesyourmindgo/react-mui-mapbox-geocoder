@@ -17,7 +17,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react", "flowtype", "prettier"],
+  "plugins": ["react", "flowtype", "prettier", "react-hooks"],
   "rules": {
     "indent": [
       "error",
@@ -28,6 +28,8 @@
     ],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single", {"avoidEscape": true}],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
