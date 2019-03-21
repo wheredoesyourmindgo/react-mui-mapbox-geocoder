@@ -131,16 +131,24 @@ const MatGeocoder = ({
   const [searchTime, setSearchTime] = useState<Date>(new Date());
   const [value, setValue] = useState<string>('');
   const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
+
+  let input: HTMLInputElement;
+
+  const focusInput = useCallback(() => {
+    if (input) {
+      input.focus();
+    }
+  }, [input]);
+
   useEffect(() => {
     if (focusOnMount) {
       focusInput();
     }
-  }, [focusOnMount]);
+  }, [focusOnMount, focusInput]);
+
   useEffect(() => {
     onSuggest && onSuggest(results);
-  }, [results]);
-
-  let input: HTMLInputElement;
+  }, [results, onSuggest]);
 
   const storeInputReference = (autosuggest) => {
     if (autosuggest != null) {
@@ -244,12 +252,6 @@ const MatGeocoder = ({
     );
   };
 
-  const focusInput = useCallback(() => {
-    if (input) {
-      input.focus();
-    }
-  }, [input]);
-
   const handleSuggestionsFetchRequested = ({value}) => {
     setLoading(true);
     if (value === '') {
@@ -320,7 +322,7 @@ const MatGeocoder = ({
     setValue('');
     // After clear button is clicked the input should be re-focused automatically.
     focusInput();
-  }, []);
+  }, [focusInput]);
 
   return accessToken ? (
     <Autosuggest
