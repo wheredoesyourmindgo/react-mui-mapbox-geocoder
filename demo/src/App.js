@@ -9,9 +9,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {withStyles} from '@material-ui/core/styles';
 import './App.css';
 
-type Props = {
-  classes: any
-};
+// type Props = {
+//   classes: any
+// };
 
 const geocoderApiOptions = {
   country: 'us'
@@ -37,8 +37,12 @@ const initialViewport = {
   zoom: 8
 };
 
-const Demo = ({classes}: Props) => {
+const Demo = () => {
   const [viewport, setViewport] = useState(initialViewport);
+
+  const _onViewportChange = useCallback((viewport) => {
+    setViewport(viewport);
+  }, []);
 
   const _handleGeocoderSelect = useCallback(
     (result) => {
@@ -53,12 +57,8 @@ const Demo = ({classes}: Props) => {
       };
       _onViewportChange(newViewport);
     },
-    [viewport]
+    [viewport, _onViewportChange]
   );
-
-  const _onViewportChange = useCallback((viewport) => {
-    setViewport(viewport);
-  }, []);
 
   return (
     <div className="App">
@@ -73,6 +73,7 @@ const Demo = ({classes}: Props) => {
 
         <div className="geocoder">
           <MatGeocoder
+            focusOnMount
             inputPlaceholder="Search Address"
             accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
             onSelect={(result) => _handleGeocoderSelect(result)}

@@ -8,9 +8,9 @@ type Props = {
   show: boolean
 };
 
-const debouncedProgressBar = (props: Props) => {
+const debouncedProgressBar = ({show = false}: Props) => {
   return (
-    <Fade in={props.show}>
+    <Fade in={show}>
       <LinearProgress style={{position: 'absolute', width: '100%'}} />
     </Fade>
   );
