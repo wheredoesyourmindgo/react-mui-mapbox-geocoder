@@ -419,7 +419,7 @@ const MatGeocoder = ({
       classes
     ]
   );
-  return <React.Fragment>{autoSuggestEl}</React.Fragment>;
+  return autoSuggestEl;
 };
 
 MatGeocoder.defaultProps = {

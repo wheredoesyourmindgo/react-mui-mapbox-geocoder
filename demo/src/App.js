@@ -9,9 +9,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {withStyles} from '@material-ui/core/styles';
 import './App.css';
 
-// type Props = {
-//   classes: any
-// };
+type Props = {
+  classes: any
+};
 
 const geocoderApiOptions = {
   country: 'us'
@@ -21,11 +21,16 @@ const geocoderApiOptions = {
 
 const styles = {
   input: {
-    backgroundColor: 'white',
-    borderRadius: 3
+    // backgroundColor: 'white',
+    borderRadius: 4,
+    '&$cssFocused $notchedOutline': {
+      borderColor: 'green'
+    }
   },
+  notchedOutline: {},
+  cssFocused: {},
   textField: {
-    width: '100%'
+    // backgroundColor: 'blue',
   }
 };
 
@@ -37,7 +42,7 @@ const initialViewport = {
   zoom: 8
 };
 
-const Demo = () => {
+const Demo = ({classes}: Props) => {
   const [viewport, setViewport] = useState(initialViewport);
 
   const _onViewportChange = useCallback((viewport) => {
@@ -81,6 +86,17 @@ const Demo = () => {
             {...geocoderApiOptions}
             inputPaperProps={{square: true}}
             suggestionsPaperProps={{square: true}}
+            inputTextFieldProps={{
+              variant: 'outlined',
+              fullWidth: true,
+              classes: {
+                root: classes.textField,
+
+                notchedOutline: classes.notchedOutline,
+                focused: classes.focused
+              }
+            }}
+            showInputContainer={false}
             // inputTextFieldProps={{
             //   variant: 'outlined',
             //   fullWidth: false,
@@ -89,6 +105,11 @@ const Demo = () => {
             //   }
             // }}
             // inputClasses={{root: classes.input}}
+            inputClasses={{
+              root: classes.input,
+              notchedOutline: classes.notchedOutline,
+              focused: classes.cssFocused
+            }}
             // showInputContainer={false}
           />
         </div>
