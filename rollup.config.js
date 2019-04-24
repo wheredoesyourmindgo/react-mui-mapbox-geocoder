@@ -1,13 +1,21 @@
 // node-resolve will resolve all the node dependencies
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import commonjs from 'rollup-plugin-commonjs';
 
 import pkg from './package.json';
 
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+const globals = {
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  '@material-ui/core': 'Material-UI'
+};
+
 export default {
-  input: 'src/index.js',
+  input: 'src/index.ts',
   output: [
     {
       file: pkg.main,
@@ -30,7 +38,8 @@ export default {
     'lodash.omitby',
     'react-debounce-render',
     'react-autosuggest',
-    'color-alpha'
+    'color-alpha',
+    Object.keys(globals)
     // 'react',
     // 'prop-types',
     // '@material-ui/core/Fade',
@@ -48,15 +57,17 @@ export default {
   ],
   plugins: [
     peerDepsExternal(),
-    resolve(),
+    resolve({extensions}),
     commonjs({
-      // non-CommonJS modules will be ignored, but you can also
-      // specifically include/exclude files
-      include: 'node_modules/**' // Default: undefined
+      include: '**/node_modules/**',
+      namedExports: {}
     }),
+    typescript(),
     babel({
       runtimeHelpers: true,
-      exclude: 'node_modules/**'
+      include: ['src/**/*'],
+      exclude: 'node_modules/**',
+      extensions
     })
   ]
 };

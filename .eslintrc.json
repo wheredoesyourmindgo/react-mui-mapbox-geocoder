@@ -8,7 +8,6 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:flowtype/recommended",
     "plugin:prettier/recommended"
   ],
   "parserOptions": {
@@ -17,7 +16,7 @@
     },
     "sourceType": "module"
   },
-  "plugins": ["react", "flowtype", "prettier", "react-hooks"],
+  "plugins": ["react", "prettier", "react-hooks"],
   "rules": {
     "indent": [
       "error",

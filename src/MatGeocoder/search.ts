@@ -1,18 +1,15 @@
-// @flow
 import fetch from 'isomorphic-unfetch';
-import es6promise from 'es6-promise';
+require('es6-promise').polyfill();
 import omitBy from 'lodash.omitby';
 import isNil from 'lodash.isnil';
-
-es6promise.polyfill();
 
 export const search = async (
   endpoint: string,
   source: string,
   accessToken: string,
   query: string,
-  onResult: (err: any, res: ?Response, searchTime: Date) => void,
-  proximity?: {longitude: number, latitude: number},
+  onResult: (err: any, res: Response | null, searchTime: Date) => void,
+  proximity?: {longitude: number; latitude: number},
   country?: string,
   bbox?: Array<number>,
   types?: string,
@@ -51,7 +48,7 @@ export const search = async (
   }
 };
 
-function toUrlString(params) {
+function toUrlString(params: any) {
   return Object.keys(params)
     .map(
       (key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])

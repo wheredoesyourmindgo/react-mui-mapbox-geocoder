@@ -1,5 +1,5 @@
-// @flow
-import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
+import * as React from 'react';
+import {useState, useCallback, useEffect, useMemo, useRef} from 'react';
 import {search} from './search';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -12,96 +12,99 @@ import Paper from '@material-ui/core/Paper';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import {withStyles} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
+import withStyles from '@material-ui/core/styles/withStyles';
+import createStyles from '@material-ui/core/styles/createStyles';
+import {Theme} from '@material-ui/core/styles/createMuiTheme';
 import classNames from 'classnames';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
 import alpha from 'color-alpha';
 
 type Props = {
-  classes: any,
-  endpoint: string,
-  source: string,
-  inputPlaceholder: string,
-  accessToken: string,
-  proximity?: {longitude: number, latitude: number},
-  country?: string,
-  bbox?: Array<number>,
-  types?: string,
-  limit?: number,
-  autocomplete?: boolean,
-  language?: string,
-  showLoader: boolean,
-  focusOnMount: boolean,
-  onSelect: (param: any) => void,
-  onSuggest: (results: Array<any>) => void,
-  onInputBlur?: (event: any) => void,
-  onInputFocus?: (event: any) => void,
-  inputClasses?: any, // Override css classes to input.
-  inputPaperProps?: any, // Override input container props.
-  suggestionsPaperProps?: any, // Override suggestions container props.
-  inputTextFieldProps?: any,
-  showInputContainer?: boolean
+  classes: any;
+  endpoint: string;
+  source: string;
+  inputPlaceholder: string;
+  accessToken: string;
+  proximity?: {longitude: number; latitude: number};
+  country?: string;
+  bbox?: Array<number>;
+  types?: string;
+  limit?: number;
+  autocomplete?: boolean;
+  language?: string;
+  showLoader: boolean;
+  focusOnMount: boolean;
+  onSelect: (param: any) => void;
+  onSuggest: (results: Array<any>) => void;
+  onInputBlur?: (event: any) => void;
+  onInputFocus?: (event: any) => void;
+  inputClasses?: any; // Override css classes to input.
+  inputPaperProps?: any; // Override input container props.
+  suggestionsPaperProps?: any; // Override suggestions container props.
+  inputTextFieldProps?: any;
+  showInputContainer?: boolean;
 };
 
-const matStyles = (theme) => ({
-  container: {
-    flexGrow: 1,
-    position: 'relative'
-  },
-  suggestionsContainerOpen: {
-    position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0
-  },
-  suggestion: {
-    display: 'block',
-    marginBottom: 0
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: 'none'
-  },
-  inputContainer: {
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingRight: theme.spacing.unit, // IconButton on right provides sufficient padding
-    paddingLeft: theme.spacing.unit * 2,
-    backgroundColor: alpha(theme.palette.background.paper, 0.9),
-    overflow: 'hidden',
-    '&:hover,&:active,&.inputContainerFocused': {
-      backgroundColor: theme.palette.background.paper
+const styles = (theme: Theme) =>
+  createStyles({
+    container: {
+      flexGrow: 1,
+      position: 'relative'
     },
-    // Maintain a consistent height when IconButton (CancelIcon) is visible.
-    minHeight: '64px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center'
-    //...
-  },
-  grow: {
-    flexGrow: 1
-  },
-  shrink: {
-    flexShrink: 1
-  },
-  noGrow: {
-    flexGrow: 0
-  },
-  noShrink: {
-    flexShrink: 0
-  }
-});
+    suggestionsContainerOpen: {
+      position: 'absolute',
+      zIndex: 1,
+      marginTop: theme.spacing.unit,
+      left: 0,
+      right: 0
+    },
+    suggestion: {
+      display: 'block',
+      marginBottom: 0
+    },
+    suggestionsList: {
+      margin: 0,
+      padding: 0,
+      listStyleType: 'none'
+    },
+    inputContainer: {
+      paddingTop: theme.spacing.unit,
+      paddingBottom: theme.spacing.unit,
+      paddingRight: theme.spacing.unit, // IconButton on right provides sufficient padding
+      paddingLeft: theme.spacing.unit * 2,
+      backgroundColor: alpha(theme.palette.background.paper, 0.9),
+      overflow: 'hidden',
+      '&:hover,&:active,&.inputContainerFocused': {
+        backgroundColor: theme.palette.background.paper
+      },
+      // Maintain a consistent height when IconButton (CancelIcon) is visible.
+      minHeight: '64px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
+      //...
+    },
+    grow: {
+      flexGrow: 1
+    },
+    shrink: {
+      flexShrink: 1
+    },
+    noGrow: {
+      flexGrow: 0
+    },
+    noShrink: {
+      flexShrink: 0
+    }
+  });
 
 /**
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-const MatGeocoder = ({
+const MatGeocoder: React.FC<Props> = ({
   proximity,
   country,
   bbox,
@@ -125,19 +128,18 @@ const MatGeocoder = ({
   inputTextFieldProps,
   showLoader,
   inputPaperProps
-}: Props) => {
+}) => {
   const [results, setResults] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTime, setSearchTime] = useState<Date>(new Date());
   const [value, setValue] = useState<string>('');
   const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
 
-  const autoSuggestRef = useRef();
+  const autoSuggestRef = useRef<any>();
 
   const focusInput = useCallback(() => {
-    if (autoSuggestRef.current && autoSuggestRef.current.input) {
-      autoSuggestRef.current.input.focus();
-    }
+    const {input = null} = autoSuggestRef.current || {};
+    input && input.focus();
   }, []);
 
   useEffect(() => {
@@ -277,11 +279,11 @@ const MatGeocoder = ({
         setLoading(false);
         setResults(
           fc.features
-            .map((feature) => ({
+            .map((feature: any) => ({
               feature: feature,
               label: feature.place_name
             }))
-            .filter((feature) => feature.label)
+            .filter((feature: any) => feature.label)
         );
       }
     },
@@ -331,7 +333,7 @@ const MatGeocoder = ({
    * (event, {suggestion, suggestionValue, suggestionIndex, sectionIndex, method})
    */
   const handleSuggestionSelected = useCallback(
-    (event, {suggestion}) => {
+    (_event, {suggestion}) => {
       onSelect && onSelect(suggestion.feature);
       // focus on the input after click to maintain key traversal
       // this.inputRef.current && this.inputRef.current.focus()
@@ -344,7 +346,7 @@ const MatGeocoder = ({
     setResults([]);
   }, []);
 
-  const handleChange = useCallback((event, {newValue}) => {
+  const handleChange = useCallback((_event, {newValue}) => {
     setValue(newValue);
   }, []);
 
@@ -355,17 +357,19 @@ const MatGeocoder = ({
     return (
       <MenuItem selected={isHighlighted} component="div">
         <Typography noWrap variant="subtitle1">
-          {parts.map((part, index) => {
-            return part.highlight ? (
-              <span key={String(index)} style={{fontWeight: 500}}>
-                {part.text}
-              </span>
-            ) : (
-              <strong key={String(index)} style={{fontWeight: 300}}>
-                {part.text}
-              </strong>
-            );
-          })}
+          {parts.map(
+            (part: {highlight: boolean; text: string}, index: number) => {
+              return part.highlight ? (
+                <span key={String(index)} style={{fontWeight: 500}}>
+                  {part.text}
+                </span>
+              ) : (
+                <strong key={String(index)} style={{fontWeight: 300}}>
+                  {part.text}
+                </strong>
+              );
+            }
+          )}
         </Typography>
       </MenuItem>
     );
@@ -432,8 +436,8 @@ MatGeocoder.defaultProps = {
   showInputContainer: true
 };
 
-function getResultValue(result) {
+function getResultValue(result: any) {
   return result.label;
 }
 
-export default withStyles(matStyles)(MatGeocoder);
+export default withStyles(styles)(MatGeocoder);
