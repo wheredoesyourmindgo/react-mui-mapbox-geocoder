@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {useState, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
 import {search} from './search';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -45,6 +44,16 @@ type Props = {
   suggestionsPaperProps?: any; // Override suggestions container props.
   inputTextFieldProps?: any;
   showInputContainer?: boolean;
+};
+
+const defaultProps = {
+  endpoint: 'https://api.mapbox.com',
+  inputPlaceholder: 'Search',
+  showLoader: true,
+  source: 'mapbox.places',
+  onSuggest: () => {},
+  focusOnMount: false,
+  showInputContainer: true
 };
 
 const styles = (theme: Theme) =>
@@ -426,15 +435,7 @@ const MatGeocoder: React.FC<Props> = ({
   return autoSuggestEl;
 };
 
-MatGeocoder.defaultProps = {
-  endpoint: 'https://api.mapbox.com',
-  inputPlaceholder: 'Search',
-  showLoader: true,
-  source: 'mapbox.places',
-  onSuggest: () => {},
-  focusOnMount: false,
-  showInputContainer: true
-};
+MatGeocoder.defaultProps = defaultProps;
 
 function getResultValue(result: any) {
   return result.label;
