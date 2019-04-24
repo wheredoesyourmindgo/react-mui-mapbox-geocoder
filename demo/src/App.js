@@ -1,17 +1,14 @@
-// @flow
 import React, {useState, useCallback} from 'react';
 import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
 // import MatGeocoder from 'react-mui-mapbox-geocoder';
 // import for use with developing component from copy of source.
-import MatGeocoder from './lib/MatGeocoder';
+// import MatGeocoder from './lib/MatGeocoder';
+// import for use with developing component from local copy of dist.
+import MatGeocoder from './lib';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {withStyles} from '@material-ui/core/styles';
 import './App.css';
-
-type Props = {
-  classes: any
-};
 
 const geocoderApiOptions = {
   country: 'us'
@@ -42,7 +39,7 @@ const initialViewport = {
   zoom: 8
 };
 
-const Demo = ({classes}: Props) => {
+const Demo = ({classes}) => {
   const [viewport, setViewport] = useState(initialViewport);
 
   const _onViewportChange = useCallback((viewport) => {

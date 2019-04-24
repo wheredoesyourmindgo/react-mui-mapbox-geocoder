@@ -25,3 +25,4 @@ yarn-error.log*
 
 /dist
 /flow-typed
+.rpt2_cache/
