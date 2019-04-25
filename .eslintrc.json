@@ -20,13 +20,11 @@
       "jsx": true
     },
     "sourceType": "module",
-    "project": "./tsconfig.json",
-    "tsconfigRootDir": "./"
+    "project": "tsconfig.json"
   },
   "plugins": [
     "react",
     "prettier",
-    "react-hooks",
     "import",
     "react-hooks",
     "@typescript-eslint"
