@@ -30,8 +30,7 @@ export default {
   plugins: [
     resolve({extensions}),
     commonjs({
-      include: 'node_modules/**',
-      namedExports: {}
+      include: 'node_modules/**'
     }),
     typescript(),
     babel({
