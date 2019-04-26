@@ -49,10 +49,13 @@
     "@typescript-eslint/no-use-before-define": ["error", {"functions": false}]
   },
   "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    },
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
-    }
   }
 }
