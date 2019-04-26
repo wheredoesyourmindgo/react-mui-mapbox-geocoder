@@ -64,7 +64,6 @@
     "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-react": "^7.0.0",
-    "@babel/preset-typescript": "^7.3.3",
     "@material-ui/core": "^3.9.3",
     "@types/autosuggest-highlight": "^3.1.0",
     "@types/classnames": "^2.2.7",
