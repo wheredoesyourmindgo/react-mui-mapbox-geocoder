@@ -20,6 +20,16 @@ import classNames from 'classnames';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
 import alpha from 'color-alpha';
 
+const defaultProps = {
+  endpoint: 'https://api.mapbox.com',
+  inputPlaceholder: 'Search',
+  showLoader: true,
+  source: 'mapbox.places',
+  onSuggest: () => {},
+  focusOnMount: false,
+  showInputContainer: true
+};
+
 type Props = {
   classes: any;
   endpoint: string;
@@ -44,17 +54,7 @@ type Props = {
   suggestionsPaperProps?: any; // Override suggestions container props.
   inputTextFieldProps?: any;
   showInputContainer?: boolean;
-};
-
-const defaultProps = {
-  endpoint: 'https://api.mapbox.com',
-  inputPlaceholder: 'Search',
-  showLoader: true,
-  source: 'mapbox.places',
-  onSuggest: () => {},
-  focusOnMount: false,
-  showInputContainer: true
-};
+} & typeof defaultProps;
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -113,7 +113,7 @@ const styles = (theme: Theme) =>
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-const MatGeocoder: React.FC<Props> = ({
+const MatGeocoder = ({
   proximity,
   country,
   bbox,
@@ -137,7 +137,7 @@ const MatGeocoder: React.FC<Props> = ({
   inputTextFieldProps,
   showLoader,
   inputPaperProps
-}) => {
+}: Props) => {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTime, setSearchTime] = useState<Date>(new Date());
