@@ -11,7 +11,7 @@ export const search = async (
   onResult: (err: any, res: Response | null, searchTime: Date) => void,
   proximity?: {longitude: number; latitude: number},
   country?: string,
-  bbox?: Array<number>,
+  bbox?: number[],
   types?: string,
   limit?: number,
   autocomplete?: boolean,
@@ -23,6 +23,7 @@ export const search = async (
     // Don't send empty query params to Mapbox geocoding api.
     const searchParams = omitBy(
       {
+        // eslint-disable-next-line @typescript-eslint/camelcase
         access_token: accessToken,
         proximity:
           proximity && Object.keys(proximity).length === 2

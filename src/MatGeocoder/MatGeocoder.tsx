@@ -28,7 +28,7 @@ type Props = {
   accessToken: string;
   proximity?: {longitude: number; latitude: number};
   country?: string;
-  bbox?: Array<number>;
+  bbox?: number[];
   types?: string;
   limit?: number;
   autocomplete?: boolean;
@@ -36,7 +36,7 @@ type Props = {
   showLoader: boolean;
   focusOnMount: boolean;
   onSelect: (param: any) => void;
-  onSuggest: (results: Array<any>) => void;
+  onSuggest: (results: any[]) => void;
   onInputBlur?: (event: any) => void;
   onInputFocus?: (event: any) => void;
   inputClasses?: any; // Override css classes to input.
@@ -138,7 +138,7 @@ const MatGeocoder: React.FC<Props> = ({
   showLoader,
   inputPaperProps
 }) => {
-  const [results, setResults] = useState<Array<any>>([]);
+  const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTime, setSearchTime] = useState<Date>(new Date());
   const [value, setValue] = useState<string>('');
