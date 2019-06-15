@@ -65,7 +65,7 @@ const styles = (theme: Theme) =>
     suggestionsContainerOpen: {
       position: 'absolute',
       zIndex: 1,
-      marginTop: theme.spacing.unit,
+      marginTop: theme.spacing(1),
       left: 0,
       right: 0
     },
@@ -79,10 +79,10 @@ const styles = (theme: Theme) =>
       listStyleType: 'none'
     },
     inputContainer: {
-      paddingTop: theme.spacing.unit,
-      paddingBottom: theme.spacing.unit,
-      paddingRight: theme.spacing.unit, // IconButton on right provides sufficient padding
-      paddingLeft: theme.spacing.unit * 2,
+      paddingTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+      paddingRight: theme.spacing(1), // IconButton on right provides sufficient padding
+      paddingLeft: theme.spacing(2),
       backgroundColor: alpha(theme.palette.background.paper, 0.9),
       overflow: 'hidden',
       '&:hover,&:active,&.inputContainerFocused': {
