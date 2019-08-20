@@ -16,7 +16,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import withStyles from '@material-ui/core/styles/withStyles';
 import createStyles from '@material-ui/core/styles/createStyles';
 import {Theme} from '@material-ui/core/styles/createMuiTheme';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
 import alpha from 'color-alpha';
 
@@ -194,17 +194,13 @@ const MatGeocoder = ({
           <Paper
             square={false}
             elevation={1}
-            className={classNames(classes.inputContainer, {
+            className={clsx(classes.inputContainer, {
               inputContainerFocused: inputIsFocused
             })}
             {...inputPaperProps}
           >
             <Grid container alignItems="center" spacing={8} wrap="nowrap">
-              <Grid
-                item
-                xs
-                className={classNames(classes.grow, classes.noShrink)}
-              >
+              <Grid item xs className={clsx(classes.grow, classes.noShrink)}>
                 {inputTextField}
               </Grid>
               {/* Unmount and mount releases space for TexField to grow AND show animation. */}
@@ -213,11 +209,7 @@ const MatGeocoder = ({
                 unmountOnExit={true}
                 mountOnEnter={true}
               >
-                <Grid
-                  item
-                  xs
-                  className={classNames(classes.shrink, classes.noGrow)}
-                >
+                <Grid item xs className={clsx(classes.shrink, classes.noGrow)}>
                   <IconButton
                     aria-label="Clear Search Input"
                     onClick={handleClearInput}
