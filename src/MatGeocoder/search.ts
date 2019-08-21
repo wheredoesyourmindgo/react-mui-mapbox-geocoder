@@ -1,7 +1,7 @@
-require('es6-promise').polyfill();
 import fetch from 'isomorphic-unfetch';
 import omitBy from 'lodash.omitby';
 import isNil from 'lodash.isnil';
+require('es6-promise').polyfill();
 
 export const search = async (
   endpoint: string,
