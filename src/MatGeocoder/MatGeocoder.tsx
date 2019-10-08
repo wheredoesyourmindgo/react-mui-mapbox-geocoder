@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
+import Paper, {PaperProps} from '@material-ui/core/Paper';
 import Fade from '@material-ui/core/Fade';
-import TextField from '@material-ui/core/TextField';
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -27,7 +27,8 @@ const defaultProps = {
   source: 'mapbox.places',
   onSuggest: () => {},
   focusOnMount: false,
-  showInputContainer: true
+  showInputContainer: true,
+  inputValue: ''
 };
 
 type Props = {
@@ -50,9 +51,9 @@ type Props = {
   onInputBlur?: (event: any) => void;
   onInputFocus?: (event: any) => void;
   inputClasses?: any; // Override css classes to input.
-  inputPaperProps?: any; // Override input container props.
-  suggestionsPaperProps?: any; // Override suggestions container props.
-  inputTextFieldProps?: any;
+  inputPaperProps?: PaperProps; // Override input container props.
+  suggestionsPaperProps?: PaperProps; // Override suggestions container props.
+  inputTextFieldProps?: TextFieldProps;
   showInputContainer?: boolean;
 } & typeof defaultProps;
 
@@ -136,15 +137,16 @@ const MatGeocoder = ({
   inputClasses,
   inputTextFieldProps,
   showLoader,
-  inputPaperProps
+  inputPaperProps,
+  inputValue
 }: Props) => {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTime, setSearchTime] = useState<Date>(new Date());
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(inputValue);
   const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
 
-  const autoSuggestRef = useRef<any>();
+  const autoSuggestRef = useRef<Autosuggest>(null);
 
   const focusInput = useCallback(() => {
     const {input = null} = autoSuggestRef.current || {};
