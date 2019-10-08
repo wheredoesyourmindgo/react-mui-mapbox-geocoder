@@ -7,7 +7,7 @@ type Props = {
   show: boolean;
 };
 
-const debouncedProgressBar: React.FC<Props> = ({show = false}) => {
+const debouncedProgressBar = ({show = false}: Props) => {
   return (
     <Fade in={show}>
       <LinearProgress style={{position: 'absolute', width: '100%'}} />
