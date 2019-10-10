@@ -154,6 +154,10 @@ const MatGeocoder = ({
   }, []);
 
   useEffect(() => {
+    setValue(inputValue);
+  }, [inputValue]);
+
+  useEffect(() => {
     if (focusOnMount) {
       focusInput();
     }
