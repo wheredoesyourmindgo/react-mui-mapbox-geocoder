@@ -3,39 +3,31 @@ import {search} from './search';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper, {PaperProps} from '@material-ui/core/Paper';
-import Fade from '@material-ui/core/Fade';
-import TextField, {TextFieldProps} from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import {
+  Fade,
+  Grid,
+  IconButton,
+  InputAdornment,
+  MenuItem,
+  Paper,
+  TextField,
+  Theme,
+  Typography
+} from '@material-ui/core';
+import {PaperProps} from '@material-ui/core/Paper';
+import {TextFieldProps} from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
-import withStyles from '@material-ui/core/styles/withStyles';
-import createStyles from '@material-ui/core/styles/createStyles';
-import {Theme} from '@material-ui/core/styles/createMuiTheme';
+import {makeStyles, createStyles} from '@material-ui/styles';
 import clsx from 'clsx';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
 import alpha from 'color-alpha';
 
-const defaultProps = {
-  endpoint: 'https://api.mapbox.com',
-  inputPlaceholder: 'Search',
-  showLoader: true,
-  source: 'mapbox.places',
-  onSuggest: () => {},
-  focusOnMount: false,
-  showInputContainer: true,
-  inputValue: ''
-};
-
 type Props = {
-  classes: any;
-  endpoint: string;
-  source: string;
-  inputPlaceholder: string;
+  inputValue?: string;
+  endpoint?: string;
+  source?: string;
+  inputPlaceholder?: string;
   accessToken: string;
   proximity?: {longitude: number; latitude: number};
   country?: string;
@@ -44,10 +36,10 @@ type Props = {
   limit?: number;
   autocomplete?: boolean;
   language?: string;
-  showLoader: boolean;
-  focusOnMount: boolean;
+  showLoader?: boolean;
+  focusOnMount?: boolean;
   onSelect: (param: any) => void;
-  onSuggest: (results: any[]) => void;
+  onSuggest?: (results: any[]) => void;
   onInputBlur?: (event: any) => void;
   onInputFocus?: (event: any) => void;
   inputClasses?: any; // Override css classes to input.
@@ -55,9 +47,9 @@ type Props = {
   suggestionsPaperProps?: PaperProps; // Override suggestions container props.
   inputTextFieldProps?: TextFieldProps;
   showInputContainer?: boolean;
-} & typeof defaultProps;
+};
 
-const styles = (theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       flexGrow: 1,
@@ -108,13 +100,22 @@ const styles = (theme: Theme) =>
     noShrink: {
       flexShrink: 0
     }
-  });
+  })
+);
 
 /**
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
 const MatGeocoder = ({
+  endpoint = 'https://api.mapbox.com',
+  inputPlaceholder = 'Search',
+  showLoader = true,
+  source = 'mapbox.places',
+  onSuggest = () => {},
+  focusOnMount = false,
+  showInputContainer = true,
+  inputValue = '',
   proximity,
   country,
   bbox,
@@ -122,29 +123,21 @@ const MatGeocoder = ({
   limit,
   autocomplete,
   language,
-  source,
   suggestionsPaperProps,
-  classes,
-  showInputContainer,
-  focusOnMount,
-  endpoint,
-  onSuggest,
   onSelect,
   accessToken,
   onInputFocus,
   onInputBlur,
-  inputPlaceholder,
   inputClasses,
   inputTextFieldProps,
-  showLoader,
-  inputPaperProps,
-  inputValue
+  inputPaperProps
 }: Props) => {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTime, setSearchTime] = useState<Date>(new Date());
   const [value, setValue] = useState<string>(inputValue);
   const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
+  const classes = useStyles();
 
   const autoSuggestRef = useRef<Autosuggest>(null);
 
@@ -382,6 +375,8 @@ const MatGeocoder = ({
     );
   }, []);
 
+  const getResultValue = useCallback((result: any) => result.label, []);
+
   const autoSuggestEl = useMemo(
     () =>
       accessToken ? (
@@ -427,16 +422,11 @@ const MatGeocoder = ({
       renderSuggestion,
       results,
       value,
-      classes
+      classes,
+      getResultValue
     ]
   );
   return autoSuggestEl;
 };
 
-MatGeocoder.defaultProps = defaultProps;
-
-function getResultValue(result: any) {
-  return result.label;
-}
-
-export default withStyles(styles)(MatGeocoder);
+export default MatGeocoder;

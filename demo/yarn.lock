@@ -907,7 +907,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.3.1", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.5.5.tgz#74fba56d35efbeca444091c7850ccd494fd2f132"
   integrity sha512-28QvEGyQyNkB0/m2B4FU7IEZGK2NUrcMtT6BZEFALTguLk+AUT6ofsHtPk5QyjAdUkpMJ+/Em+quwz4HOt30AQ==
@@ -1269,13 +1269,6 @@
     popper.js "^1.14.1"
     prop-types "^15.7.2"
     react-transition-group "^4.3.0"
-
-"@material-ui/icons@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.2.1.tgz#fe2f1c4f60c24256d244a69d86d0c00e8ed4037e"
-  integrity sha512-FvSD5lUBJ66frI4l4AYAPy2CH14Zs2Dgm0o3oOMr33BdQtOAjCgbdOcvPBeaD1w6OQl31uNW3CKOE8xfPNxvUQ==
-  dependencies:
-    "@babel/runtime" "^7.2.0"
 
 "@material-ui/icons@^4.4.3":
   version "4.4.3"
@@ -8703,10 +8696,10 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-react-map-gl@^5.0.11:
-  version "5.0.11"
-  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-5.0.11.tgz#4a2f6e6052127a40254e4e1f52ac4a118fc0413f"
-  integrity sha512-CFhGkgHjyeoNz0z0pEmswc4bWlHGpAkBAXAFKSpipQlxgk0URHB3XIjKtWp9XXpKgqsgjmgMtTlnCFrwSS9B1w==
+react-map-gl@^5.0.12:
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/react-map-gl/-/react-map-gl-5.0.12.tgz#6f94d4570fab339a936262c51c43c2493004b014"
+  integrity sha512-b2+OU/U8T8kAGoSP3GXBkSWQKkBHq8IyZYMUCBEFZ9gH7dyRtCwjy9Vanzek7PmZs668q2+896fYQ3Z9eO6X0A==
   dependencies:
     "@babel/runtime" "^7.0.0"
     mapbox-gl "^1.0.0"
@@ -8715,13 +8708,13 @@ react-map-gl@^5.0.11:
     react-virtualized-auto-sizer "^1.0.2"
     viewport-mercator-project "^6.1.0"
 
-react-mui-mapbox-geocoder@^0.4.15:
-  version "0.4.15"
-  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.4.15.tgz#d79db0ccceb1ef222daec9a3ecaf7f235f9df2e5"
-  integrity sha512-dRxWMZcI0AKqBctcoSr7E4ZrekPlA9rCIiyjLDZ+bCmd13rS+PIeokiCQTNVAXdqc4EkzvbCydIpw/J8HhjBNA==
+react-mui-mapbox-geocoder@^0.4.19:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.4.19.tgz#fbdb050ac836889c5f2e2030cc20f9a5bb2b7854"
+  integrity sha512-OYQ6xd8HaH8/O1b6NUW98AGJ3n6O/uTZtgDLOQbGkrYB0iZpvdD7ZOPW6CSCvBPhynL+sPiJSdU4HjOtJyOGMQ==
   dependencies:
-    "@babel/runtime" "^7.5.5"
-    "@material-ui/icons" "^4.2.1"
+    "@babel/runtime" "^7.6.2"
+    "@material-ui/icons" "^4.4.3"
     autosuggest-highlight "^3.1.1"
     clsx "^1.0.4"
     color-alpha "^1.0.4"

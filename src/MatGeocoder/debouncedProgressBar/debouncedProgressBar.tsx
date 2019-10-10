@@ -1,7 +1,6 @@
 import React from 'react';
 import debounceRender from 'react-debounce-render';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Fade from '@material-ui/core/Fade';
+import {Fade, LinearProgress} from '@material-ui/core';
 
 type Props = {
   show: boolean;

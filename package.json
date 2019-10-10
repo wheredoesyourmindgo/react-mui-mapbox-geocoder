@@ -32,12 +32,11 @@
   "author": "Abe Hendricks<moemanchu@icloud.com>",
   "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
     "@material-ui/icons": "^4.4.3",
     "autosuggest-highlight": "^3.1.1",
     "clsx": "^1.0.4",
     "color-alpha": "^1.0.4",
-    "es6-promise": "^4.2.8",
     "isomorphic-unfetch": "^3.0.0",
     "lodash.isnil": "^4.0.0",
     "lodash.omitby": "^4.6.0",
@@ -45,8 +44,8 @@
     "react-debounce-render": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.6.2",
-    "@babel/core": "^7.6.2",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
     "@babel/plugin-proposal-do-expressions": "^7.6.0",
@@ -63,8 +62,8 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-syntax-import-meta": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
     "@types/autosuggest-highlight": "^3.1.0",
     "@types/lodash.isnil": "^4.0.6",
     "@types/lodash.omitby": "^4.6.6",
@@ -87,10 +86,11 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.24.3",
-    "typescript": "3.6.3"
+    "typescript": "3.6.4"
   },
   "peerDependencies": {
     "@material-ui/core": "^4.5.0",
+    "@material-ui/styles": "^4.5.0",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"

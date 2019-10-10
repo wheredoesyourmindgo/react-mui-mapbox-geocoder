@@ -1,11 +1,11 @@
 import React, {useState, useCallback} from 'react';
 import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
-// import MatGeocoder from 'react-mui-mapbox-geocoder';
+import MatGeocoder from 'react-mui-mapbox-geocoder';
 // import for use with developing component from copy of source.
 // import MatGeocoder from './lib/MatGeocoder';
 // import for use with developing component from local copy of dist.
-import MatGeocoder from './lib';
+// import MatGeocoder from './lib';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {withStyles} from '@material-ui/core/styles';
 import './App.css';
@@ -77,23 +77,22 @@ const Demo = ({classes}) => {
           <MatGeocoder
             focusOnMount
             inputPlaceholder="Search Address"
+            inputValue="Foobar"
             accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
             onSelect={(result) => _handleGeocoderSelect(result)}
             showLoader={true}
             {...geocoderApiOptions}
             inputPaperProps={{square: true}}
             suggestionsPaperProps={{square: true}}
-            inputTextFieldProps={{
-              variant: 'outlined',
-              fullWidth: true,
-              classes: {
-                root: classes.textField,
-
-                notchedOutline: classes.notchedOutline,
-                focused: classes.focused
-              }
-            }}
-            showInputContainer={false}
+            // inputTextFieldProps={{
+            //   variant: 'outlined',
+            //   fullWidth: true,
+            //   classes: {
+            //     root: classes.textField,
+            //     notchedOutline: classes.notchedOutline,
+            //     focused: classes.focused
+            //   }
+            // }}
             // inputTextFieldProps={{
             //   variant: 'outlined',
             //   fullWidth: false,
@@ -102,11 +101,11 @@ const Demo = ({classes}) => {
             //   }
             // }}
             // inputClasses={{root: classes.input}}
-            inputClasses={{
-              root: classes.input,
-              notchedOutline: classes.notchedOutline,
-              focused: classes.cssFocused
-            }}
+            // inputClasses={{
+            //   root: classes.input,
+            //   notchedOutline: classes.notchedOutline,
+            //   focused: classes.cssFocused
+            // }}
             // showInputContainer={false}
           />
         </div>
