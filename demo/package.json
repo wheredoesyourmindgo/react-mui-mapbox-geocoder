@@ -9,8 +9,8 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-map-gl": "^5.0.11",
-    "react-mui-mapbox-geocoder": "^0.4.15",
+    "react-map-gl": "^5.0.12",
+    "react-mui-mapbox-geocoder": "^0.4.19",
     "react-scripts": "^3.2.0"
   },
   "scripts": {
