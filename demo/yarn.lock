@@ -921,6 +921,13 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.6.3":
+  version "7.6.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.3.tgz#935122c74c73d2240cafd32ddb5fc2a6cd35cf1f"
+  integrity sha512-kq6anf9JGjW8Nt5rYfEuGRaEAaH1mkv3Bbu6rYvLOpPh/RusSJXuKPEAoZ7L7gybZkchE8+NV5g9vKF4AGAtsA==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.1.0", "@babel/template@^7.4.0", "@babel/template@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.4.tgz#f4b88d1225689a08f5bc3a17483545be9e4ed237"
@@ -3892,11 +3899,6 @@ es6-iterator@2.0.3, es6-iterator@~2.0.3:
     d "1"
     es5-ext "^0.10.35"
     es6-symbol "^3.1.1"
-
-es6-promise@^4.2.8:
-  version "4.2.8"
-  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
-  integrity sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==
 
 es6-symbol@^3.1.1, es6-symbol@~3.1.1:
   version "3.1.1"
@@ -8708,17 +8710,16 @@ react-map-gl@^5.0.12:
     react-virtualized-auto-sizer "^1.0.2"
     viewport-mercator-project "^6.1.0"
 
-react-mui-mapbox-geocoder@^0.4.19:
-  version "0.4.19"
-  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-0.4.19.tgz#fbdb050ac836889c5f2e2030cc20f9a5bb2b7854"
-  integrity sha512-OYQ6xd8HaH8/O1b6NUW98AGJ3n6O/uTZtgDLOQbGkrYB0iZpvdD7ZOPW6CSCvBPhynL+sPiJSdU4HjOtJyOGMQ==
+react-mui-mapbox-geocoder@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-mui-mapbox-geocoder/-/react-mui-mapbox-geocoder-1.0.0.tgz#9d958f6e6096f1be1da9a34cf6daa9268beeb545"
+  integrity sha512-Pk5bCJ25i7dLqkNM2HL9wyNBErWGI85KHP9eBGENL46BneJFGK7UeA1EH9W1CoTKrlBVH9R9x3XjZhAo4VWVjw==
   dependencies:
-    "@babel/runtime" "^7.6.2"
+    "@babel/runtime" "^7.6.3"
     "@material-ui/icons" "^4.4.3"
     autosuggest-highlight "^3.1.1"
     clsx "^1.0.4"
     color-alpha "^1.0.4"
-    es6-promise "^4.2.8"
     isomorphic-unfetch "^3.0.0"
     lodash.isnil "^4.0.0"
     lodash.omitby "^4.6.0"

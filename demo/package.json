@@ -5,12 +5,13 @@
   "dependencies": {
     "@material-ui/core": "^4.5.0",
     "@material-ui/icons": "^4.4.3",
+    "@material-ui/styles": "^4.5.0",
     "d3-ease": "^1.0.3",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-map-gl": "^5.0.12",
-    "react-mui-mapbox-geocoder": "^0.4.19",
+    "react-mui-mapbox-geocoder": "^1.0.0",
     "react-scripts": "^3.2.0"
   },
   "scripts": {
