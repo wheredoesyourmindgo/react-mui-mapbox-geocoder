@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
-import {ThemeProvider} from '@material-ui/styles';
+import {ThemeProvider} from '@material-ui/core/styles';
 import {createMuiTheme} from '@material-ui/core/styles';
 import MatGeocoder from 'react-mui-mapbox-geocoder';
 // import for use with developing component from copy of source.
@@ -9,7 +9,7 @@ import MatGeocoder from 'react-mui-mapbox-geocoder';
 // import for use with developing component from local copy of dist.
 // import MatGeocoder from './lib';
 import 'mapbox-gl/dist/mapbox-gl.css';
-// import {makeStyles} from '@material-ui/styles';
+// import {makeStyles} from '@material-ui/core/styles';
 import './App.css';
 
 const theme = createMuiTheme();
