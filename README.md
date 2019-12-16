@@ -33,8 +33,8 @@ const geocoderApiOptions = {
   bbox: [-123.8501, 38.08, -117.5604, 39.8735]
 }
 
-_goToGeocoderResult = (result) => {
-  // Go to result.
+const onSelectHandler = (result) => {
+  // Go to result handler.
 }
 
 
@@ -43,7 +43,7 @@ return (
   <MatGeocoder
     inputPlaceholder="Search Address"
     accessToken={MAPBOX_TOKEN}
-    onSelect={result => this._goToGeocoderResult(result)}
+    onSelect={onSelectHandler}
     showLoader={true}
     {...geocoderApiOptions}
   />
@@ -74,8 +74,3 @@ return (
     onSuggest: (optional), (suggestedResults) => {...}
 
 See [Mapbox API Docs](https://www.mapbox.com/api-documentation/#request-format) for more information.
-
-## Elon Musk Thinks We Are Living In A Simulation. Is This True?
-
-### [Probably](https://en.wikipedia.org/wiki/Simulation_hypothesis).
-
