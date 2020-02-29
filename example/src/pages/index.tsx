@@ -34,8 +34,8 @@ const geocoderApiOptions = {
 // });
 
 const initialViewport = {
-  width: 400,
-  height: 400,
+  width: '100vw',
+  height: '100vh',
   latitude: 37.7577,
   longitude: -122.4376,
   zoom: 8
@@ -79,14 +79,15 @@ const IndexPage = () => {
 
           <div className="geocoder">
             <MatGeocoder
+              disableUnderline
               focusOnMount
-              inputPlaceholder="Search Address"
-              inputValue="Foobar"
+              inputPlaceholder="Search for Address"
+              inputValue="12345 A Street"
               accessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN ?? ''}
               onSelect={(result) => _handleGeocoderSelect(result)}
               showLoader={true}
               {...geocoderApiOptions}
-              inputPaperProps={{square: true}}
+              inputPaperProps={{square: false}}
               suggestionsPaperProps={{square: true}}
               // inputTextFieldProps={{
               //   variant: 'outlined',
@@ -97,14 +98,6 @@ const IndexPage = () => {
               //     focused: classes.focused
               //   }
               // }}
-              // inputTextFieldProps={{
-              //   variant: 'outlined',
-              //   fullWidth: false,
-              //   classes: {
-              //     root: classes.textField
-              //   }
-              // }}
-              // inputClasses={{root: classes.input}}
               // inputClasses={{
               //   root: classes.input,
               //   notchedOutline: classes.notchedOutline,
