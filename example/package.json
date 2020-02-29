@@ -1,0 +1,50 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^4.9.4",
+    "@material-ui/icons": "^4.9.1",
+    "d3-ease": "^1.0.6",
+    "dotenv-webpack": "^1.7.0",
+    "next": "^9.2.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-map-gl": "^5.2.3",
+    "react-mui-mapbox-geocoder": "^1.0.1"
+  },
+  "scripts": {
+    "dev": "next",
+    "next": "next",
+    "build": "next build",
+    "export": "next export",
+    "cp-src": "cp -R ../src/MatGeocoder/ src/lib/MatGeocoder",
+    "cp-dist": "cp -R ../dist/ src/lib/MatGeocoder"
+  },
+  "devDependencies": {
+    "@types/d3": "^5.7.2",
+    "@types/node": "^13.7.7",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-map-gl": "^5.2.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-compat": "^3.5.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.5.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.2"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
