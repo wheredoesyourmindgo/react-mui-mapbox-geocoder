@@ -18,6 +18,7 @@
     "watch": "rollup -c -w",
     "build": "rollup -c",
     "prepublish": "npm run build",
+    "postpublish": "git push",
     "type-check": "tsc -p ."
   },
   "keywords": [
