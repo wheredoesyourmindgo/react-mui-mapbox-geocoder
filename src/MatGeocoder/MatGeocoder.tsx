@@ -47,6 +47,7 @@ type Props = {
   suggestionsPaperProps?: PaperProps; // Override suggestions container props.
   inputTextFieldProps?: TextFieldProps;
   showInputContainer?: boolean;
+  disableUnderline?: boolean;
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -112,6 +113,7 @@ const MatGeocoder = ({
   inputPlaceholder = 'Search',
   showLoader = true,
   source = 'mapbox.places',
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onSuggest = () => {},
   focusOnMount = false,
   showInputContainer = true,
@@ -130,6 +132,7 @@ const MatGeocoder = ({
   onInputBlur,
   inputClasses,
   inputTextFieldProps,
+  disableUnderline,
   inputPaperProps
 }: Props) => {
   const [results, setResults] = useState<any[]>([]);
@@ -168,12 +171,13 @@ const MatGeocoder = ({
 
   const renderInput = useCallback(
     (renderInputProps) => {
-      const {classes, ref, inputClasses, ...other} = renderInputProps;
+      const {ref, inputClasses, ...other} = renderInputProps;
 
       const inputTextField = (
         <TextField
           fullWidth
           InputProps={{
+            disableUnderline,
             inputRef: ref,
             startAdornment: (
               <InputAdornment position="start">
@@ -225,14 +229,16 @@ const MatGeocoder = ({
       );
     },
     [
+      disableUnderline,
+      inputTextFieldProps,
       showInputContainer,
       loading,
       showLoader,
-      inputPaperProps,
-      handleClearInput,
-      inputTextFieldProps,
+      classes,
       inputIsFocused,
-      value
+      inputPaperProps,
+      value.length,
+      handleClearInput
     ]
   );
 
@@ -397,13 +403,12 @@ const MatGeocoder = ({
           getSuggestionValue={getResultValue}
           renderSuggestion={renderSuggestion}
           inputProps={{
-            classes,
             placeholder: inputPlaceholder,
             value: value,
             onChange: handleChange,
             onFocus: focusInputHandler,
             onBlur: blurInputHandler,
-            inputClasses
+            className: inputClasses
           }}
         />
       ) : null,
