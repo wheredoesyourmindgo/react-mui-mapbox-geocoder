@@ -113,6 +113,7 @@ const MatGeocoder = ({
   inputPlaceholder = 'Search',
   showLoader = true,
   source = 'mapbox.places',
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   onSuggest = () => {},
   focusOnMount = false,
   showInputContainer = true,
@@ -170,7 +171,7 @@ const MatGeocoder = ({
 
   const renderInput = useCallback(
     (renderInputProps) => {
-      const {classes, ref, inputClasses, ...other} = renderInputProps;
+      const {ref, inputClasses, ...other} = renderInputProps;
 
       const inputTextField = (
         <TextField
@@ -233,6 +234,7 @@ const MatGeocoder = ({
       showInputContainer,
       loading,
       showLoader,
+      classes,
       inputIsFocused,
       inputPaperProps,
       value.length,
