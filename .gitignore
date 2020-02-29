@@ -3,7 +3,6 @@
 # dependencies
 **/node_modules
 /demo/src/lib
-/demo/build
 
 # testing
 /coverage
@@ -25,3 +24,5 @@ yarn-error.log*
 dist
 flow-typed
 .rpt2_cache/
+
+**/.next
