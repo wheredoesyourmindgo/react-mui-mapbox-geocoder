@@ -38,7 +38,6 @@
     "autosuggest-highlight": "^3.1.1",
     "clsx": "^1.1.0",
     "color-alpha": "^1.0.4",
-    "isomorphic-unfetch": "^3.0.0",
     "lodash.isnil": "^4.0.0",
     "lodash.omitby": "^4.6.0",
     "react-autosuggest": "^9.4.3",

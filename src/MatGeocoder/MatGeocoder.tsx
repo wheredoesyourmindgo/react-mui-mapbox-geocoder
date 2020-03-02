@@ -192,7 +192,7 @@ const MatGeocoder = ({
       );
 
       return showInputContainer ? (
-        <React.Fragment>
+        <>
           <DebouncedProgressBar show={loading && showLoader} />
           <Paper
             square={false}
@@ -223,9 +223,9 @@ const MatGeocoder = ({
               </Fade>
             </Grid>
           </Paper>
-        </React.Fragment>
+        </>
       ) : (
-        <React.Fragment>{inputTextField}</React.Fragment>
+        <>{inputTextField}</>
       );
     },
     [
