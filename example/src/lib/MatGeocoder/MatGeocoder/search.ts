@@ -1,5 +1,5 @@
-import omitBy from 'lodash.omitby'
-import isNil from 'lodash.isnil'
+import omitBy from 'lodash.omitby';
+import isNil from 'lodash.isnil';
 
 export const search = async (
   endpoint: string,
@@ -15,9 +15,9 @@ export const search = async (
   autocomplete?: boolean,
   language?: string
 ) => {
-  const searchTime = new Date()
+  const searchTime = new Date();
   try {
-    const baseUrl = `${endpoint}/geocoding/v5/${source}/${query}.json`
+    const baseUrl = `${endpoint}/geocoding/v5/${source}/${query}.json`;
     // Don't send empty query params to Mapbox geocoding api.
     const searchParams = omitBy(
       {
@@ -35,22 +35,22 @@ export const search = async (
         language
       },
       isNil
-    )
-    const url = `${baseUrl}?${toUrlString(searchParams)}`
-    const res = await fetch(url)
-    const data = await res.json()
-    onResult(null, data, searchTime)
-    return {err: null, res, searchTime}
+    );
+    const url = `${baseUrl}?${toUrlString(searchParams)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    onResult(null, data, searchTime);
+    return {err: null, res, searchTime};
   } catch (err) {
-    onResult(err, null, searchTime)
-    return {err, res: null, searchTime}
+    onResult(err, null, searchTime);
+    return {err, res: null, searchTime};
   }
-}
+};
 
 function toUrlString(params: any) {
   return Object.keys(params)
     .map(
       (key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
     )
-    .join('&')
+    .join('&');
 }

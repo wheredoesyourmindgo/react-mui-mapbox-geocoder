@@ -7,7 +7,7 @@ import {createMuiTheme} from '@material-ui/core/styles'
 // import for use with developing component from copy of source.
 // import MatGeocoder from './lib/MatGeocoder';
 // import for use with developing component from local copy of dist.
-import MatGeocoder from '../lib/MatGeocoder/MatGeocoder'
+import MatGeocoder from '../lib/MatGeocoder'
 // import {makeStyles} from '@material-ui/core/styles';
 
 const theme = createMuiTheme()

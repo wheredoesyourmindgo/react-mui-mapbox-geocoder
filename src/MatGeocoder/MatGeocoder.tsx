@@ -14,6 +14,7 @@ import {
   Theme,
   Typography
 } from '@material-ui/core';
+import usePrevious from '../hooks/usePrevious';
 import {PaperProps} from '@material-ui/core/Paper';
 import {TextFieldProps} from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
@@ -143,6 +144,7 @@ const MatGeocoder = ({
   const classes = useStyles();
 
   const autoSuggestRef = useRef<Autosuggest>(null);
+  const prevValue = usePrevious<string>(value);
 
   const focusInput = useCallback(() => {
     const {input = null} = autoSuggestRef.current || {};
@@ -282,7 +284,6 @@ const MatGeocoder = ({
       // sequence of autocomplete display.
       if (!err && fc && fc.features && searchTime <= st) {
         setSearchTime(st);
-        setLoading(false);
         setResults(
           fc.features
             .map((feature: any) => ({
@@ -291,6 +292,7 @@ const MatGeocoder = ({
             }))
             .filter((feature: any) => feature.label)
         );
+        setLoading(false);
       }
     },
     [searchTime]
@@ -299,7 +301,9 @@ const MatGeocoder = ({
   const handleSuggestionsFetchRequested = useCallback(
     ({value}) => {
       setLoading(true);
-      if (value === '') {
+      if (prevValue === value) {
+        setLoading(false);
+      } else if (value === '') {
         setResults([]);
         setLoading(false);
       } else {
@@ -328,6 +332,7 @@ const MatGeocoder = ({
       autocomplete,
       source,
       proximity,
+      prevValue,
       onResult,
       types,
       accessToken
