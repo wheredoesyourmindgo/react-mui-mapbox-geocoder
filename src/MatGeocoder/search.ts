@@ -1,4 +1,3 @@
-import fetch from 'isomorphic-unfetch';
 import omitBy from 'lodash.omitby';
 import isNil from 'lodash.isnil';
 
