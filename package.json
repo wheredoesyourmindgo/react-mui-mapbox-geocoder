@@ -89,9 +89,9 @@
     "typescript": "3.8.3"
   },
   "peerDependencies": {
-    "@material-ui/core": "^4.9.5",
+    "@material-ui/core": "^4.9.8",
     "prop-types": "^15.7.2",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
