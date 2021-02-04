@@ -3,7 +3,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 import commonjs from 'rollup-plugin-commonjs';
-// import {terser} from 'rollup-plugin-terser';
+import {terser} from 'rollup-plugin-terser';
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
 import pkg from './package.json';
@@ -18,11 +18,11 @@ export default {
       format: 'cjs',
       sourcemap: true,
     },
-    {
-      file: pkg.module,
-      format: 'es',
-      sourcemap: true,
-    },
+    // {
+    //   file: pkg.module,
+    //   format: 'es',
+    //   sourcemap: true,
+    // },
   ],
   // All the used libs needs to be here
   external: [
@@ -42,6 +42,6 @@ export default {
       exclude: 'node_modules/**',
       extensions,
     }),
-    // terser({module: false}),
+    terser({module: false}),
   ],
 };
