@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useMemo, useRef} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 import {search} from './search';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
@@ -12,7 +12,7 @@ import {
   Paper,
   TextField,
   Theme,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import usePrevious from '../hooks/usePrevious';
 import {PaperProps} from '@material-ui/core/Paper';
@@ -44,7 +44,7 @@ type Props = {
   onInputBlur?: (event: any) => void;
   onInputFocus?: (event: any) => void;
   inputClasses?: any; // Override css classes to input.
-  inputPaperProps?: PaperProps; // Override input container props.
+  inputPaperProps?: Partial<PaperProps>; // Override input container props.
   suggestionsPaperProps?: PaperProps; // Override suggestions container props.
   inputTextFieldProps?: TextFieldProps;
   showInputContainer?: boolean;
@@ -55,23 +55,23 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       flexGrow: 1,
-      position: 'relative'
+      position: 'relative',
     },
     suggestionsContainerOpen: {
       position: 'absolute',
       zIndex: 1,
       marginTop: theme.spacing(1),
       left: 0,
-      right: 0
+      right: 0,
     },
     suggestion: {
       display: 'block',
-      marginBottom: 0
+      marginBottom: 0,
     },
     suggestionsList: {
       margin: 0,
       padding: 0,
-      listStyleType: 'none'
+      listStyleType: 'none',
     },
     inputContainer: {
       paddingTop: theme.spacing(1),
@@ -81,27 +81,27 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: alpha(theme.palette.background.paper, 0.9),
       overflow: 'hidden',
       '&:hover,&:active,&.inputContainerFocused': {
-        backgroundColor: theme.palette.background.paper
+        backgroundColor: theme.palette.background.paper,
       },
       // Maintain a consistent height when IconButton (CancelIcon) is visible.
       minHeight: '64px',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center'
+      justifyContent: 'center',
       //...
     },
     grow: {
-      flexGrow: 1
+      flexGrow: 1,
     },
     shrink: {
-      flexShrink: 1
+      flexShrink: 1,
     },
     noGrow: {
-      flexGrow: 0
+      flexGrow: 0,
     },
     noShrink: {
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   })
 );
 
@@ -134,7 +134,7 @@ const MatGeocoder = ({
   inputClasses,
   inputTextFieldProps,
   disableUnderline,
-  inputPaperProps
+  inputPaperProps,
 }: Props) => {
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -171,12 +171,26 @@ const MatGeocoder = ({
     focusInput();
   }, [focusInput]);
 
+  const dblClickHandler = useCallback((e) => {
+    console.log(e);
+    if (e) {
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {
+        e.nativeEvent.stopImmediatePropagation();
+      }
+    }
+  }, []);
+
   const renderInput = useCallback(
     (renderInputProps) => {
       const {ref, inputClasses, ...other} = renderInputProps;
+      const {className} = inputPaperProps ?? {};
 
       const inputTextField = (
         <TextField
+          onDoubleClick={dblClickHandler}
           fullWidth
           InputProps={{
             disableUnderline,
@@ -187,7 +201,7 @@ const MatGeocoder = ({
               </InputAdornment>
             ),
             classes: inputClasses,
-            ...other
+            ...other,
           }}
           {...inputTextFieldProps}
         />
@@ -199,9 +213,14 @@ const MatGeocoder = ({
           <Paper
             square={false}
             elevation={1}
-            className={clsx(classes.inputContainer, {
-              inputContainerFocused: inputIsFocused
-            })}
+            className={clsx([
+              classes.inputContainer,
+              {
+                inputContainerFocused: inputIsFocused,
+                className: Boolean(className),
+              },
+            ])}
+            onDoubleClick={dblClickHandler}
             {...inputPaperProps}
           >
             <Grid container alignItems="center" spacing={8} wrap="nowrap">
@@ -231,6 +250,7 @@ const MatGeocoder = ({
       );
     },
     [
+      dblClickHandler,
       disableUnderline,
       inputTextFieldProps,
       showInputContainer,
@@ -240,12 +260,12 @@ const MatGeocoder = ({
       inputIsFocused,
       inputPaperProps,
       value.length,
-      handleClearInput
+      handleClearInput,
     ]
   );
 
   const focusInputHandler = useCallback(
-    (e) => {
+    (e: React.FocusEvent<any>) => {
       setInputIsFocused(true);
       onInputFocus && onInputFocus(e);
     },
@@ -288,7 +308,7 @@ const MatGeocoder = ({
           fc.features
             .map((feature: any) => ({
               feature: feature,
-              label: feature.place_name
+              label: feature.place_name,
             }))
             .filter((feature: any) => feature.label)
         );
@@ -302,7 +322,6 @@ const MatGeocoder = ({
     ({value}) => {
       setLoading(true);
       if (prevValue === value) {
-        console.log('same same');
         setLoading(false);
       } else if (value === '') {
         setResults([]);
@@ -336,7 +355,7 @@ const MatGeocoder = ({
       prevValue,
       onResult,
       types,
-      accessToken
+      accessToken,
     ]
   );
 
@@ -389,55 +408,37 @@ const MatGeocoder = ({
 
   const getResultValue = useCallback((result: any) => result.label, []);
 
-  const autoSuggestEl = useMemo(
-    () =>
-      accessToken ? (
-        <Autosuggest
-          ref={autoSuggestRef}
-          theme={{
-            container: classes.container,
-            suggestionsContainerOpen: classes.suggestionsContainerOpen,
-            suggestionsList: classes.suggestionsList,
-            suggestion: classes.suggestion
-          }}
-          renderInputComponent={renderInput}
-          suggestions={results}
-          onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
-          onSuggestionsClearRequested={handleSuggestionsClearRequested}
-          onSuggestionSelected={handleSuggestionSelected}
-          renderSuggestionsContainer={renderSuggestionsContainer}
-          getSuggestionValue={getResultValue}
-          renderSuggestion={renderSuggestion}
-          inputProps={{
-            placeholder: inputPlaceholder,
-            value: value,
-            onChange: handleChange,
-            onFocus: focusInputHandler,
-            onBlur: blurInputHandler,
-            className: inputClasses
-          }}
-        />
-      ) : null,
-    [
-      accessToken,
-      blurInputHandler,
-      handleChange,
-      handleSuggestionSelected,
-      focusInputHandler,
-      handleSuggestionsFetchRequested,
-      inputClasses,
-      handleSuggestionsClearRequested,
-      renderInput,
-      inputPlaceholder,
-      renderSuggestionsContainer,
-      renderSuggestion,
-      results,
-      value,
-      classes,
-      getResultValue
-    ]
+  if (!accessToken) {
+    return null;
+  }
+
+  return (
+    <Autosuggest
+      ref={autoSuggestRef}
+      theme={{
+        container: classes.container,
+        suggestionsContainerOpen: classes.suggestionsContainerOpen,
+        suggestionsList: classes.suggestionsList,
+        suggestion: classes.suggestion,
+      }}
+      renderInputComponent={renderInput}
+      suggestions={results}
+      onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
+      onSuggestionsClearRequested={handleSuggestionsClearRequested}
+      onSuggestionSelected={handleSuggestionSelected}
+      renderSuggestionsContainer={renderSuggestionsContainer}
+      getSuggestionValue={getResultValue}
+      renderSuggestion={renderSuggestion}
+      inputProps={{
+        placeholder: inputPlaceholder,
+        value: value,
+        onChange: handleChange,
+        onFocus: focusInputHandler,
+        onBlur: blurInputHandler,
+        className: inputClasses,
+      }}
+    />
   );
-  return autoSuggestEl;
 };
 
 export default MatGeocoder;
