@@ -175,7 +175,7 @@ const MatGeocoder = ({
   const renderInput = useCallback(
     (renderInputProps) => {
       const {ref, inputClasses, ...other} = renderInputProps;
-      const {className} = inputPaperProps ?? {};
+      const {className, ...restInputPaperProps} = inputPaperProps ?? {};
 
       const inputTextField = (
         <TextField
@@ -208,7 +208,7 @@ const MatGeocoder = ({
               },
               className,
             ])}
-            {...inputPaperProps}
+            {...restInputPaperProps}
           >
             <Grid container alignItems="center" spacing={8} wrap="nowrap">
               <Grid item xs className={clsx(classes.grow, classes.noShrink)}>
