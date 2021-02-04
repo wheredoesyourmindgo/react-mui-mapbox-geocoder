@@ -205,8 +205,8 @@ const MatGeocoder = ({
               classes.inputContainer,
               {
                 inputContainerFocused: inputIsFocused,
-                className: Boolean(className),
               },
+              className,
             ])}
             {...inputPaperProps}
           >
