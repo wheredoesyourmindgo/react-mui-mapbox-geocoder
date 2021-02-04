@@ -1,5 +1,4 @@
-import { PaperProps } from '@material-ui/core/Paper';
-import { TextFieldProps } from '@material-ui/core/TextField';
+import { PaperProps, TextFieldProps } from '@material-ui/core';
 declare type Props = {
     inputValue?: string;
     endpoint?: string;

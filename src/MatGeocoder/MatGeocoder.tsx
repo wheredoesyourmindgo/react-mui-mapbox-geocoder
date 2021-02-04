@@ -13,13 +13,14 @@ import {
   TextField,
   Theme,
   Typography,
+  PaperProps,
+  TextFieldProps,
+  createStyles,
+  makeStyles,
 } from '@material-ui/core';
 import usePrevious from '../hooks/usePrevious';
-import {PaperProps} from '@material-ui/core/Paper';
-import {TextFieldProps} from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import CancelIcon from '@material-ui/icons/Cancel';
-import {makeStyles, createStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
 import alpha from 'color-alpha';

@@ -16,32 +16,32 @@ export default {
     {
       file: pkg.main,
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
     },
     {
       file: pkg.module,
       format: 'es',
-      sourcemap: true
-    }
+      sourcemap: true,
+    },
   ],
   // All the used libs needs to be here
   external: [
-    ...Object.keys(pkg.dependencies || {})
+    ...Object.keys(pkg.dependencies || {}),
     // ...Object.keys(pkg.peerDependencies || {})
   ],
   plugins: [
     peerDepsExternal(),
     resolve({extensions}),
     commonjs({
-      include: 'node_modules/**'
+      include: 'node_modules/**',
     }),
     typescript(),
     babel({
       runtimeHelpers: true,
       include: ['src/**/*'],
       exclude: 'node_modules/**',
-      extensions
+      extensions,
     }),
-    terser()
-  ]
+    terser({module: false}),
+  ],
 };
