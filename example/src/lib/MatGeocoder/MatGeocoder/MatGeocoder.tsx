@@ -171,18 +171,6 @@ const MatGeocoder = ({
     focusInput();
   }, [focusInput]);
 
-  const dblClickHandler = useCallback((e) => {
-    console.log(e);
-    if (e) {
-      if (e.stopPropagation) {
-        e.stopPropagation();
-      }
-      if (e.nativeEvent && e.nativeEvent.stopImmediatePropagation) {
-        e.nativeEvent.stopImmediatePropagation();
-      }
-    }
-  }, []);
-
   const renderInput = useCallback(
     (renderInputProps) => {
       const {ref, inputClasses, ...other} = renderInputProps;
@@ -190,7 +178,6 @@ const MatGeocoder = ({
 
       const inputTextField = (
         <TextField
-          onDoubleClick={dblClickHandler}
           fullWidth
           InputProps={{
             disableUnderline,
@@ -220,7 +207,6 @@ const MatGeocoder = ({
                 className: Boolean(className),
               },
             ])}
-            onDoubleClick={dblClickHandler}
             {...inputPaperProps}
           >
             <Grid container alignItems="center" spacing={8} wrap="nowrap">
@@ -250,7 +236,6 @@ const MatGeocoder = ({
       );
     },
     [
-      dblClickHandler,
       disableUnderline,
       inputTextFieldProps,
       showInputContainer,
