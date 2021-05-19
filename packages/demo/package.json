@@ -1,0 +1,46 @@
+{
+  "name": "react-mui-mapbox-geocoder-demo",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "d3-ease": "^2.0.0",
+    "next": "^10.2.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-map-gl": "^6.1.15",
+    "vercel": "^22.0.1"
+  },
+  "scripts": {
+    "dev": "next",
+    "next": "next",
+    "build": "next build",
+    "export": "next export",
+    "cp-dist": "cp -R ../pkg/dist/ src/lib/pkg"
+  },
+  "devDependencies": {
+    "@types/d3": "^6.5.0",
+    "@types/node": "^15.0.1",
+    "@types/react": "^17.0.4",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-map-gl": "^5.2.2",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-compat": "^3.5.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.0.4",
+    "typescript": "^4.2.4"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

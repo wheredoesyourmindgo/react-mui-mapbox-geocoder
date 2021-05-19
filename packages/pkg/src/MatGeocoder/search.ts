@@ -1,7 +1,7 @@
 import omitBy from 'lodash.omitby';
 import isNil from 'lodash.isnil';
 
-export const search = async (
+export default async function search(
   endpoint: string,
   source: string,
   accessToken: string,
@@ -14,7 +14,7 @@ export const search = async (
   limit?: number,
   autocomplete?: boolean,
   language?: string
-) => {
+) {
   const searchTime = new Date();
   try {
     const baseUrl = `${endpoint}/geocoding/v5/${source}/${query}.json`;
@@ -32,7 +32,7 @@ export const search = async (
         country,
         limit,
         autocomplete,
-        language
+        language,
       },
       isNil
     );
@@ -45,7 +45,7 @@ export const search = async (
     onResult(err, null, searchTime);
     return {err, res: null, searchTime};
   }
-};
+}
 
 function toUrlString(params: any) {
   return Object.keys(params)

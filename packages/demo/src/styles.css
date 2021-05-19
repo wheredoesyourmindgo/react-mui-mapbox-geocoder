@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  position: relative;
+}
+
+.App .navControls {
+  position: absolute;
+  left: 10px;
+  bottom: 100px;
+}
+.App .geolocator {
+  z-index: 4;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 300px;
+  max-width: calc(100% - 20px);
+}
