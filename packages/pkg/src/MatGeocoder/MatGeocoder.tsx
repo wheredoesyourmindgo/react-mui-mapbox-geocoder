@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect, useRef} from 'react';
-import {search} from './search';
+import search from './search';
 import Autosuggest from 'react-autosuggest';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';

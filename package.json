@@ -1,98 +1,24 @@
 {
-  "name": "react-mui-mapbox-geocoder",
+  "name": "react-mui-mapbox-geocoder-mono",
   "version": "1.1.10",
-  "description": "A Material UI Autosuggest'ing Mapbox Geocoder for locating addresses and points of interest.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wheredoesyourmindgo/react-mui-mapbox-geocoder"
-  },
-  "main": "dist/index.js",
-  "files": [
-    "dist/"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn watch",
-    "watch": "rollup -c -w",
-    "build": "rollup -c",
-    "prepublish": "yarn build",
-    "postpublish": "git push",
-    "type-check": "tsc -p .",
-    "install-peers": "install-peers -f"
-  },
-  "keywords": [
-    "geocoding",
-    "geocoder",
-    "address",
-    "mapbox",
-    "material-ui",
-    "react",
-    "autosuggest"
-  ],
+  "license": "MIT",
   "author": "Abe Hendricks<moemanchu@icloud.com>",
-  "license": "ISC",
-  "dependencies": {
-    "@babel/runtime": "^7.9.2",
-    "@material-ui/icons": "^4.9.1",
-    "autosuggest-highlight": "^3.1.1",
-    "clsx": "^1.1.0",
-    "color-alpha": "^1.0.4",
-    "lodash.isnil": "^4.0.0",
-    "lodash.omitby": "^4.6.0",
-    "react-autosuggest": "^9.4.3",
-    "react-debounce-render": "^6.0.0"
+  "scripts": {
+    "build:pkg": "yarn --cwd packages/pkg build",
+    "build:demo": "yarn --cwd packages/demo build",
+    "dev:pkg": "yarn --cwd packages/pkg dev",
+    "dev:demo": "yarn --cwd packages/demo dev",
+    "build": "yarn build:pkg",
+    "prepublish": "npm run build",
+    "watch:src": "nodemon --delay 1 --watch ./packages/pkg/dist/ --exec \"yarn --cwd packages/demo run cp-dist\"",
+    "dev": "concurrently -n pkg,demo,cp-dist 'yarn dev:pkg' 'yarn dev:demo' 'yarn watch:src'"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-decorators": "^7.8.3",
-    "@babel/plugin-proposal-do-expressions": "^7.8.3",
-    "@babel/plugin-proposal-export-default-from": "^7.8.3",
-    "@babel/plugin-proposal-export-namespace-from": "^7.8.3",
-    "@babel/plugin-proposal-function-sent": "^7.8.3",
-    "@babel/plugin-proposal-json-strings": "^7.8.3",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.8.3",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
-    "@babel/plugin-proposal-numeric-separator": "^7.8.3",
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@babel/plugin-proposal-pipeline-operator": "^7.8.3",
-    "@babel/plugin-proposal-throw-expressions": "^7.8.3",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-syntax-import-meta": "^7.8.3",
-    "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
-    "@babel/preset-react": "^7.9.4",
-    "@types/autosuggest-highlight": "^3.1.0",
-    "@types/lodash.isnil": "^4.0.6",
-    "@types/lodash.omitby": "^4.6.6",
-    "@types/react": "^16.9.31",
-    "@types/react-autosuggest": "^9.3.13",
-    "@types/react-dom": "^16.9.6",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^3.0.0",
-    "install-peers-cli": "^2.2.0",
-    "prettier": "^2.0.2",
-    "rollup": "^2.3.2",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.2",
-    "rollup-plugin-terser": "^5.3.0",
-    "rollup-plugin-typescript2": "^0.27.0",
-    "typescript": "3.8.3"
-  },
-  "peerDependencies": {
-    "@material-ui/core": "^4.9.8",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "concurrently": "^6.0.2",
+    "nodemon": "^2.0.6"
   }
 }
