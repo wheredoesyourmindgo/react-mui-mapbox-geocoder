@@ -33,5 +33,5 @@ declare type Props = {
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-declare const MatGeocoder: ({ endpoint, inputPlaceholder, showLoader, source, onSuggest, focusOnMount, showInputContainer, inputValue, proximity, country, bbox, types, limit, autocomplete, language, suggestionsPaperProps, onSelect, accessToken, onInputFocus, onInputBlur, inputClasses, inputTextFieldProps, disableUnderline, inputPaperProps, }: Props) => JSX.Element | null;
+declare const MatGeocoder: ({ endpoint, inputPlaceholder, showLoader, source, onSuggest, focusOnMount, showInputContainer, inputValue, proximity, country, bbox, types, limit, autocomplete, language, suggestionsPaperProps, onSelect, accessToken, onInputFocus, onInputBlur, inputClasses, inputTextFieldProps, disableUnderline, inputPaperProps }: Props) => JSX.Element | null;
 export default MatGeocoder;
