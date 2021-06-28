@@ -12,6 +12,14 @@ and
 
 [material-ui & react-autosuggest](https://material-ui.com/demos/autocomplete/#react-autosuggest)
 
+## How can I add this to my project?
+
+yarn add react-mui-mapbox-geocoder
+
+or
+
+npm install --save react-mui-mapbox-geocoder
+
 ## What Does This Component Look Like?
 
 ### it looks like this...
