@@ -67,6 +67,6 @@
     "lodash.isnil": "^4.0.0",
     "lodash.omitby": "^4.6.0",
     "react-autosuggest": "^10.1.0",
-    "react-debounce-render": "^7.0.0"
+    "use-debounce": "^7.0.0"
   }
 }
