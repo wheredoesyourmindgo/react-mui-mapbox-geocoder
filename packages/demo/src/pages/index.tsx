@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
-import {ThemeProvider, createMuiTheme} from '@material-ui/core';
+import {ThemeProvider, createMuiTheme, Box} from '@material-ui/core';
 // import for use with developing component from local copy of dist.
 import MatGeocoder from '../lib/pkg';
 
@@ -74,7 +74,7 @@ const IndexPage = () => {
             <NavigationControl onViewportChange={_onViewportChange} />
           </div>
 
-          <div className="geocoder">
+          <Box className="geocoder" width={300}>
             <MatGeocoder
               disableUnderline
               focusOnMount
@@ -104,7 +104,7 @@ const IndexPage = () => {
               // }}
               // showInputContainer={false}
             />
-          </div>
+          </Box>
         </MapGL>
       </div>
     </ThemeProvider>
