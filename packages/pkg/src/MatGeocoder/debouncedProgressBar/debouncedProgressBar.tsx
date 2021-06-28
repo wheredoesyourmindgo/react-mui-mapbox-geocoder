@@ -17,7 +17,7 @@ const debouncedProgressBar = ({show: showProp = false}: Props) => {
       setShow(false);
     }
   }, [showProp]);
-  const setShowTrue = useDebouncedCallback(() => setShow(true), 100);
+  const setShowTrue = useDebouncedCallback(() => setShow(true), 250);
 
   return (
     <Fade in={show}>
