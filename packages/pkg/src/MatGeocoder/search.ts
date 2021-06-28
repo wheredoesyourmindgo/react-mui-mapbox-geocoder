@@ -21,7 +21,6 @@ export default async function search(
     // Don't send empty query params to Mapbox geocoding api.
     const searchParams = omitBy(
       {
-        // eslint-disable-next-line @typescript-eslint/camelcase
         access_token: accessToken,
         proximity:
           proximity && Object.keys(proximity).length === 2
