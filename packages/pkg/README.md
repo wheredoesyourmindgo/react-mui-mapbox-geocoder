@@ -14,11 +14,11 @@ and
 
 ## How can I add this to my project?
 
-yarn add react-mui-mapbox-geocoder
+    yarn add react-mui-mapbox-geocoder
 
 or
 
-npm install --save react-mui-mapbox-geocoder
+    npm install --save react-mui-mapbox-geocoder
 
 ## What Does This Component Look Like?
 
