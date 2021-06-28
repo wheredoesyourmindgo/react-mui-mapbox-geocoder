@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { PaperProps, TextFieldProps } from '@material-ui/core';
 declare type Props = {
     inputValue?: string;

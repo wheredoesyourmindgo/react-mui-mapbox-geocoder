@@ -1,12 +1,24 @@
-import React from 'react';
-import debounceRender from 'react-debounce-render';
+import React, {useState} from 'react';
 import {Fade, LinearProgress} from '@material-ui/core';
+import {useDebouncedCallback} from 'use-debounce';
+import {useEffect} from 'react';
 
 type Props = {
   show: boolean;
 };
 
-const debouncedProgressBar = ({show = false}: Props) => {
+const debouncedProgressBar = ({show: showProp = false}: Props) => {
+  const [show, setShow] = useState(showProp);
+  useEffect(() => {
+    if (showProp) {
+      setShowTrue();
+    } else {
+      setShowTrue.flush();
+      setShow(false);
+    }
+  }, [showProp]);
+  const setShowTrue = useDebouncedCallback(() => setShow(true), 100);
+
   return (
     <Fade in={show}>
       <LinearProgress style={{position: 'absolute', width: '100%'}} />
@@ -14,4 +26,4 @@ const debouncedProgressBar = ({show = false}: Props) => {
   );
 };
 
-export default debounceRender(debouncedProgressBar, 100);
+export default debouncedProgressBar;
