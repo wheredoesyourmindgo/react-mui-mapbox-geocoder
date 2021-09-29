@@ -1,6 +1,3 @@
-import omitBy from 'lodash.omitby';
-import isNil from 'lodash.isnil';
-
 export default async function search(
   endpoint: string,
   source: string,
@@ -19,22 +16,34 @@ export default async function search(
   try {
     const baseUrl = `${endpoint}/geocoding/v5/${source}/${query}.json`;
     // Don't send empty query params to Mapbox geocoding api.
-    const searchParams = omitBy(
-      {
-        access_token: accessToken,
+    const searchParams = {
+      ...(isNotNil(accessToken) && {access_token: accessToken}),
+      ...(isNotNil(proximity) && {
         proximity:
           proximity && Object.keys(proximity).length === 2
             ? `${proximity.longitude},${proximity.latitude}`
             : null,
+      }),
+      ...(isNotNil(bbox) && {
         bbox: bbox && bbox.length > 0 ? bbox.join(',') : null,
+      }),
+
+      ...(isNotNil(types) && {
         types,
+      }),
+      ...(isNotNil(country) && {
         country,
+      }),
+      ...(isNotNil(limit) && {
         limit,
+      }),
+      ...(isNotNil(autocomplete) && {
         autocomplete,
+      }),
+      ...(isNotNil(language) && {
         language,
-      },
-      isNil
-    );
+      }),
+    };
     const url = `${baseUrl}?${toUrlString(searchParams)}`;
     const res = await fetch(url);
     const data = await res.json();
@@ -52,4 +61,8 @@ function toUrlString(params: any) {
       (key) => encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
     )
     .join('&');
+}
+
+function isNotNil(value: unknown) {
+  return value !== undefined && value !== null;
 }

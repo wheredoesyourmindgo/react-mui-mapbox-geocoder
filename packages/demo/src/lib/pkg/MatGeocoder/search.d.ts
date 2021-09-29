@@ -6,7 +6,7 @@ export default function search(endpoint: string, source: string, accessToken: st
     res: Response;
     searchTime: Date;
 } | {
-    err: any;
+    err: unknown;
     res: null;
     searchTime: Date;
 }>;

@@ -1,21 +1,27 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Head from 'next/head';
 import {AppProps} from 'next/app';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import {ThemeProvider} from '@material-ui/core';
+import CssBaseline from '@mui/material/CssBaseline';
+import createEmotionCache from '../lib/createEmotionCache';
+import {EmotionCache} from '@emotion/utils';
+import {CacheProvider} from '@emotion/react';
+import {ThemeProvider} from '@mui/material';
 import theme from '../lib/theme';
 import '../styles.css';
 
-export default function MyApp({Component, pageProps}: AppProps) {
-  useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement?.removeChild(jssStyles);
-    }
-  }, []);
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
+export default function MyApp({
+  Component,
+  pageProps,
+  emotionCache = clientSideEmotionCache,
+}: MyAppProps) {
   return (
-    <>
+    <CacheProvider value={emotionCache}>
       <Head>
         <meta
           name="viewport"
@@ -27,6 +33,6 @@ export default function MyApp({Component, pageProps}: AppProps) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
-    </>
+    </CacheProvider>
   );
 }

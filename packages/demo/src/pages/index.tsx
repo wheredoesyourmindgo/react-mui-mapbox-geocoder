@@ -1,11 +1,9 @@
 import React, {useState, useCallback} from 'react';
 import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
 import {easeCubic} from 'd3-ease';
-import {ThemeProvider, createMuiTheme, Box} from '@material-ui/core';
+import {Box} from '@mui/material';
 // import for use with developing component from local copy of dist.
 import MatGeocoder from '../lib/pkg';
-
-const theme = createMuiTheme();
 
 const geocoderApiOptions = {
   country: 'us',
@@ -61,53 +59,51 @@ const IndexPage = () => {
   );
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <MapGL
-          {...viewport}
-          mapboxApiAccessToken={
-            process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN ?? ''
-          }
-          onViewportChange={_onViewportChange}
-        >
-          <div className="navControls">
-            <NavigationControl onViewportChange={_onViewportChange} />
-          </div>
+    <div className="App">
+      <MapGL
+        {...viewport}
+        mapboxApiAccessToken={
+          process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN ?? ''
+        }
+        onViewportChange={_onViewportChange}
+      >
+        <div className="navControls">
+          <NavigationControl onViewportChange={_onViewportChange} />
+        </div>
 
-          <Box className="geocoder" width={300}>
-            <MatGeocoder
-              disableUnderline
-              focusOnMount
-              inputPlaceholder="Search for Address"
-              inputValue="12345 A Street"
-              accessToken={
-                process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN ?? ''
-              }
-              onSelect={(result) => _handleGeocoderSelect(result)}
-              showLoader={true}
-              {...geocoderApiOptions}
-              inputPaperProps={{square: false}}
-              suggestionsPaperProps={{square: true}}
-              // inputTextFieldProps={{
-              //   variant: 'outlined',
-              //   fullWidth: true,
-              //   classes: {
-              //     root: classes.textField,
-              //     notchedOutline: classes.notchedOutline,
-              //     focused: classes.focused
-              //   }
-              // }}
-              // inputClasses={{
-              //   root: classes.input,
-              //   notchedOutline: classes.notchedOutline,
-              //   focused: classes.cssFocused
-              // }}
-              // showInputContainer={false}
-            />
-          </Box>
-        </MapGL>
-      </div>
-    </ThemeProvider>
+        <Box className="geocoder" width={300}>
+          <MatGeocoder
+            disableUnderline
+            focusOnMount
+            inputPlaceholder="Search for Address"
+            inputValue="12345 A Street"
+            accessToken={
+              process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN ?? ''
+            }
+            onSelect={(result) => _handleGeocoderSelect(result)}
+            showLoader={true}
+            {...geocoderApiOptions}
+            inputPaperProps={{square: false}}
+            suggestionsPaperProps={{square: true}}
+            // inputTextFieldProps={{
+            //   variant: 'outlined',
+            //   fullWidth: true,
+            //   classes: {
+            //     root: classes.textField,
+            //     notchedOutline: classes.notchedOutline,
+            //     focused: classes.focused
+            //   }
+            // }}
+            // inputClasses={{
+            //   root: classes.input,
+            //   notchedOutline: classes.notchedOutline,
+            //   focused: classes.cssFocused
+            // }}
+            // showInputContainer={false}
+          />
+        </Box>
+      </MapGL>
+    </div>
   );
 };
 
