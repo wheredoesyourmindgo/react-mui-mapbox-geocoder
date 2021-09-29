@@ -22,6 +22,7 @@ import usePrevious from '../hooks/usePrevious';
 import SearchIcon from '@mui/icons-material/Search';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
+import {Result} from './Result';
 
 type Props = {
   inputValue?: string;
@@ -81,14 +82,14 @@ const MatGeocoder = ({
   disableUnderline,
   inputPaperProps,
 }: Props) => {
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTime, setSearchTime] = useState(new Date());
-  const [value, setValue] = useState<string>(inputValue);
+  const [value, setValue] = useState(inputValue);
   const [inputIsFocused, setInputIsFocused] = useState(false);
 
   const autoSuggestRef = useRef<Autosuggest>(null);
-  const prevValue = usePrevious<string>(value);
+  const prevValue = usePrevious(value);
 
   const focusInput = useCallback(() => {
     const {input = null} = autoSuggestRef.current || {};
@@ -122,8 +123,9 @@ const MatGeocoder = ({
       const {ref, inputClasses, ...other} = renderInputProps;
       const {...restInputPaperProps} = inputPaperProps ?? {};
 
-      const inputTextField = (
+      const InputTextField = () => (
         <TextField
+          variant="standard"
           fullWidth
           InputProps={{
             disableUnderline,
@@ -169,7 +171,7 @@ const MatGeocoder = ({
           >
             <Grid container alignItems="center" spacing={1} wrap="nowrap">
               <Grid item xs sx={{flexShrink: 0, flexGrow: 1}}>
-                {inputTextField}
+                <InputTextField />
               </Grid>
               {/* Unmount and mount releases space for TexField to grow AND show animation. */}
               <Fade
@@ -198,7 +200,7 @@ const MatGeocoder = ({
           </Paper>
         </>
       ) : (
-        <>{inputTextField}</>
+        <InputTextField />
       );
     },
     [
@@ -343,6 +345,7 @@ const MatGeocoder = ({
             (part: {highlight: boolean; text: string}, index: number) => (
               <Typography
                 key={index}
+                component="span"
                 variant="inherit"
                 sx={{fontWeight: part.highlight ? 500 : 300}}
               >
