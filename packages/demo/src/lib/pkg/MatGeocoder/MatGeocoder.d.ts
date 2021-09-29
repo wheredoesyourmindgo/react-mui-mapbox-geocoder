@@ -1,5 +1,4 @@
-/// <reference types="react" />
-import { PaperProps, TextFieldProps } from '@material-ui/core';
+import { PaperProps, TextFieldProps } from '@mui/material';
 declare type Props = {
     inputValue?: string;
     endpoint?: string;

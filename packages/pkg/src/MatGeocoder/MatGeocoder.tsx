@@ -9,21 +9,19 @@ import {
   IconButton,
   InputAdornment,
   MenuItem,
+  useTheme,
+  Box,
   Paper,
   TextField,
-  Theme,
   Typography,
   PaperProps,
+  alpha,
   TextFieldProps,
-  createStyles,
-  makeStyles,
-} from '@material-ui/core';
+} from '@mui/material';
 import usePrevious from '../hooks/usePrevious';
-import SearchIcon from '@material-ui/icons/Search';
-import CancelIcon from '@material-ui/icons/Cancel';
-import clsx from 'clsx';
+import SearchIcon from '@mui/icons-material/Search';
+import CancelIcon from '@mui/icons-material/Cancel';
 import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
-import alpha from 'color-alpha';
 
 type Props = {
   inputValue?: string;
@@ -51,60 +49,6 @@ type Props = {
   showInputContainer?: boolean;
   disableUnderline?: boolean;
 };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      flexGrow: 1,
-      position: 'relative',
-    },
-    suggestionsContainerOpen: {
-      position: 'absolute',
-      zIndex: 1,
-      marginTop: theme.spacing(1),
-      left: 0,
-      right: 0,
-    },
-    suggestion: {
-      display: 'block',
-      marginBottom: 0,
-    },
-    suggestionsList: {
-      margin: 0,
-      padding: 0,
-      listStyleType: 'none',
-    },
-    inputContainer: {
-      paddingTop: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
-      paddingRight: theme.spacing(1), // IconButton on right provides sufficient padding
-      paddingLeft: theme.spacing(2),
-      backgroundColor: alpha(theme.palette.background.paper, 0.9),
-      overflow: 'hidden',
-      '&:hover,&:active,&.inputContainerFocused': {
-        backgroundColor: theme.palette.background.paper,
-      },
-      // Maintain a consistent height when IconButton (CancelIcon) is visible.
-      minHeight: '64px',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      //...
-    },
-    grow: {
-      flexGrow: 1,
-    },
-    shrink: {
-      flexShrink: 1,
-    },
-    noGrow: {
-      flexGrow: 0,
-    },
-    noShrink: {
-      flexShrink: 0,
-    },
-  })
-);
 
 /**
  * Geocoder component: connects to Mapbox.com Geocoding API
@@ -138,11 +82,10 @@ const MatGeocoder = ({
   inputPaperProps,
 }: Props) => {
   const [results, setResults] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [searchTime, setSearchTime] = useState<Date>(new Date());
+  const [loading, setLoading] = useState(false);
+  const [searchTime, setSearchTime] = useState(new Date());
   const [value, setValue] = useState<string>(inputValue);
-  const [inputIsFocused, setInputIsFocused] = useState<boolean>(false);
-  const classes = useStyles();
+  const [inputIsFocused, setInputIsFocused] = useState(false);
 
   const autoSuggestRef = useRef<Autosuggest>(null);
   const prevValue = usePrevious<string>(value);
@@ -172,10 +115,12 @@ const MatGeocoder = ({
     focusInput();
   }, [focusInput]);
 
+  const theme = useTheme();
+
   const renderInput = useCallback(
     (renderInputProps) => {
       const {ref, inputClasses, ...other} = renderInputProps;
-      const {className, ...restInputPaperProps} = inputPaperProps ?? {};
+      const {...restInputPaperProps} = inputPaperProps ?? {};
 
       const inputTextField = (
         <TextField
@@ -201,17 +146,29 @@ const MatGeocoder = ({
           <Paper
             square={false}
             elevation={1}
-            className={clsx([
-              classes.inputContainer,
-              {
-                inputContainerFocused: inputIsFocused,
+            sx={{
+              paddingTop: 1,
+              paddingBottom: 1,
+              paddingRight: 1, // IconButton on right provides sufficient padding
+              paddingLeft: 2,
+              backgroundColor: inputIsFocused
+                ? theme.palette.background.paper
+                : alpha(theme.palette.background.paper, 0.9),
+              overflow: 'hidden',
+              '&:hover,&:active': {
+                backgroundColor: theme.palette.background.paper,
               },
-              className,
-            ])}
+              // Maintain a consistent height when IconButton (CancelIcon) is visible.
+              minHeight: '64px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              //...
+            }}
             {...restInputPaperProps}
           >
             <Grid container alignItems="center" spacing={1} wrap="nowrap">
-              <Grid item xs className={clsx(classes.grow, classes.noShrink)}>
+              <Grid item xs sx={{flexShrink: 0, flexGrow: 1}}>
                 {inputTextField}
               </Grid>
               {/* Unmount and mount releases space for TexField to grow AND show animation. */}
@@ -220,10 +177,18 @@ const MatGeocoder = ({
                 unmountOnExit={true}
                 mountOnEnter={true}
               >
-                <Grid item xs className={clsx(classes.shrink, classes.noGrow)}>
+                <Grid
+                  item
+                  xs
+                  sx={{
+                    flexGrow: 0,
+                    flexShrink: 1,
+                  }}
+                >
                   <IconButton
                     aria-label="Clear Search Input"
                     onClick={handleClearInput}
+                    size="large"
                   >
                     <CancelIcon />
                   </IconButton>
@@ -242,11 +207,11 @@ const MatGeocoder = ({
       showInputContainer,
       loading,
       showLoader,
-      classes,
       inputIsFocused,
       inputPaperProps,
       value.length,
       handleClearInput,
+      theme,
     ]
   );
 
@@ -375,17 +340,15 @@ const MatGeocoder = ({
       <MenuItem selected={isHighlighted} component="div">
         <Typography noWrap variant="subtitle1">
           {parts.map(
-            (part: {highlight: boolean; text: string}, index: number) => {
-              return part.highlight ? (
-                <span key={String(index)} style={{fontWeight: 500}}>
-                  {part.text}
-                </span>
-              ) : (
-                <strong key={String(index)} style={{fontWeight: 300}}>
-                  {part.text}
-                </strong>
-              );
-            }
+            (part: {highlight: boolean; text: string}, index: number) => (
+              <Typography
+                key={index}
+                variant="inherit"
+                sx={{fontWeight: part.highlight ? 500 : 300}}
+              >
+                {part.text}
+              </Typography>
+            )
           )}
         </Typography>
       </MenuItem>
@@ -399,31 +362,51 @@ const MatGeocoder = ({
   }
 
   return (
-    <Autosuggest
-      ref={autoSuggestRef}
-      theme={{
-        container: classes.container,
-        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-        suggestionsList: classes.suggestionsList,
-        suggestion: classes.suggestion,
+    <Box
+      sx={{
+        // https://github.com/moroshko/react-autosuggest#theme-optional
+        '& .react-autosuggest__container': {
+          flexGrow: 1,
+          position: 'relative',
+        },
+        '& .react-autosuggest__suggestions-container--open': {
+          position: 'absolute',
+          zIndex: 1,
+          marginTop: 1,
+          left: 0,
+          right: 0,
+        },
+        '& .react-autosuggest__suggestions-list': {
+          margin: 0,
+          padding: 0,
+          listStyleType: 'none',
+        },
+        '& .react-autosuggest__suggestion': {
+          display: 'block',
+          marginBottom: 0,
+        },
       }}
-      renderInputComponent={renderInput}
-      suggestions={results}
-      onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
-      onSuggestionsClearRequested={handleSuggestionsClearRequested}
-      onSuggestionSelected={handleSuggestionSelected}
-      renderSuggestionsContainer={renderSuggestionsContainer}
-      getSuggestionValue={getResultValue}
-      renderSuggestion={renderSuggestion}
-      inputProps={{
-        placeholder: inputPlaceholder,
-        value: value,
-        onChange: handleChange,
-        onFocus: focusInputHandler,
-        onBlur: blurInputHandler,
-        className: inputClasses,
-      }}
-    />
+    >
+      <Autosuggest
+        ref={autoSuggestRef}
+        renderInputComponent={renderInput}
+        suggestions={results}
+        onSuggestionsFetchRequested={handleSuggestionsFetchRequested}
+        onSuggestionsClearRequested={handleSuggestionsClearRequested}
+        onSuggestionSelected={handleSuggestionSelected}
+        renderSuggestionsContainer={renderSuggestionsContainer}
+        getSuggestionValue={getResultValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={{
+          placeholder: inputPlaceholder,
+          value: value,
+          onChange: handleChange,
+          onFocus: focusInputHandler,
+          onBlur: blurInputHandler,
+          className: inputClasses,
+        }}
+      />
+    </Box>
   );
 };
 

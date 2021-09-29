@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Fade, LinearProgress} from '@material-ui/core';
+import {Fade, LinearProgress} from '@mui/material';
 import {useDebouncedCallback} from 'use-debounce';
 
 type Props = {
