@@ -1,4 +1,4 @@
-import { PaperProps, TextFieldProps } from '@mui/material';
+import { PaperProps, InputBaseProps } from '@mui/material';
 declare type Props = {
     inputValue?: string;
     endpoint?: string;
@@ -24,7 +24,7 @@ declare type Props = {
     inputClasses?: any;
     inputPaperProps?: Partial<PaperProps>;
     suggestionsPaperProps?: PaperProps;
-    inputTextFieldProps?: TextFieldProps;
+    inputProps?: Partial<InputBaseProps>;
     showInputContainer?: boolean;
     disableUnderline?: boolean;
 };
@@ -32,5 +32,5 @@ declare type Props = {
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-declare const MatGeocoder: ({ endpoint, inputPlaceholder, showLoader, source, onSuggest, focusOnMount, showInputContainer, inputValue, proximity, country, bbox, types, limit, autocomplete, language, suggestionsPaperProps, onSelect, accessToken, onInputFocus, onInputBlur, inputClasses, inputTextFieldProps, disableUnderline, inputPaperProps, }: Props) => JSX.Element | null;
+declare const MatGeocoder: ({ endpoint, inputPlaceholder, showLoader, source, onSuggest, focusOnMount, showInputContainer, inputValue, proximity, country, bbox, types, limit, autocomplete, language, suggestionsPaperProps, onSelect, accessToken, onInputFocus, onInputBlur, inputClasses, inputProps: inputPropsParam, inputPaperProps, }: Props) => JSX.Element | null;
 export default MatGeocoder;
