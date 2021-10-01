@@ -12,11 +12,11 @@ import {
   useTheme,
   Box,
   Paper,
-  TextField,
   Typography,
   PaperProps,
   alpha,
-  TextFieldProps,
+  InputBase,
+  InputBaseProps,
 } from '@mui/material';
 import usePrevious from '../hooks/usePrevious';
 import SearchIcon from '@mui/icons-material/Search';
@@ -46,9 +46,24 @@ type Props = {
   inputClasses?: any; // Override css classes to input.
   inputPaperProps?: Partial<PaperProps>; // Override input container props.
   suggestionsPaperProps?: PaperProps; // Override suggestions container props.
-  inputTextFieldProps?: TextFieldProps;
+  inputProps?: Partial<InputBaseProps>;
   showInputContainer?: boolean;
   disableUnderline?: boolean;
+};
+
+const SearchInput = ({...props}: Partial<InputBaseProps>) => {
+  return (
+    <InputBase
+      type="search"
+      fullWidth
+      startAdornment={
+        <InputAdornment position="start">
+          <SearchIcon color="action" />
+        </InputAdornment>
+      }
+      {...props}
+    />
+  );
 };
 
 /**
@@ -78,8 +93,7 @@ const MatGeocoder = ({
   onInputFocus,
   onInputBlur,
   inputClasses,
-  inputTextFieldProps,
-  disableUnderline,
+  inputProps: inputPropsParam,
   inputPaperProps,
 }: Props) => {
   const [results, setResults] = useState<Result[]>([]);
@@ -122,27 +136,20 @@ const MatGeocoder = ({
     (renderInputProps) => {
       const {ref, inputClasses, ...other} = renderInputProps;
       const {...restInputPaperProps} = inputPaperProps ?? {};
-
-      const InputTextField = () => (
-        <TextField
-          variant="standard"
-          fullWidth
-          InputProps={{
-            disableUnderline,
-            inputRef: ref,
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon color="action" />
-              </InputAdornment>
-            ),
-            classes: inputClasses,
-            ...other,
-          }}
-          {...inputTextFieldProps}
+      const searchInput = (
+        <SearchInput
+          classes={inputClasses}
+          inputRef={ref}
+          {...other}
+          {...inputPropsParam}
         />
       );
 
-      return showInputContainer ? (
+      if (!showInputContainer) {
+        return searchInput;
+      }
+
+      return (
         <>
           <DebouncedProgressBar show={loading && showLoader} />
           <Paper
@@ -171,7 +178,7 @@ const MatGeocoder = ({
           >
             <Grid container alignItems="center" spacing={1} wrap="nowrap">
               <Grid item xs sx={{flexShrink: 0, flexGrow: 1}}>
-                <InputTextField />
+                {searchInput}
               </Grid>
               {/* Unmount and mount releases space for TexField to grow AND show animation. */}
               <Fade
@@ -199,13 +206,10 @@ const MatGeocoder = ({
             </Grid>
           </Paper>
         </>
-      ) : (
-        <InputTextField />
       );
     },
     [
-      disableUnderline,
-      inputTextFieldProps,
+      inputPropsParam,
       showInputContainer,
       loading,
       showLoader,
