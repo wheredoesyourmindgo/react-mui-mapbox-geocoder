@@ -1,10 +1,10 @@
 {
   "name": "react-mui-mapbox-geocoder-mono",
-  "version": "1.1.10",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
+  "main": "packages/pkg/dist/index.js",
   "license": "MIT",
   "author": "Abe Hendricks<moemanchu@icloud.com>",
   "scripts": {
