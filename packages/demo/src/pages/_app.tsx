@@ -8,6 +8,8 @@ import {CacheProvider} from '@emotion/react';
 import {ThemeProvider} from '@mui/material';
 import theme from '../lib/theme';
 import '../styles.css';
+// Third party global stylesheets
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
