@@ -186,9 +186,7 @@ const MatGeocoder = ({
                 unmountOnExit={true}
                 mountOnEnter={true}
               >
-                <Grid
-                  item
-                  xs
+                <Box
                   sx={{
                     flexGrow: 0,
                     flexShrink: 1,
@@ -201,7 +199,7 @@ const MatGeocoder = ({
                   >
                     <CancelIcon />
                   </IconButton>
-                </Grid>
+                </Box>
               </Fade>
             </Grid>
           </Paper>

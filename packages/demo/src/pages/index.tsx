@@ -1,9 +1,19 @@
-import React, {useState, useCallback} from 'react';
-import MapGL, {NavigationControl, FlyToInterpolator} from 'react-map-gl';
-import {easeCubic} from 'd3-ease';
+import React, {useCallback, useRef} from 'react';
+import MapGL, {NavigationControl, MapRef} from 'react-map-gl';
 import {Box} from '@mui/material';
 // import for use with developing component from local copy of dist.
 import MatGeocoder from '../lib/pkg';
+
+type GeocoderResult = {
+  bbox: [number, number, number, number];
+  center: [number, number];
+  place_name: string;
+  place_type: string[];
+  relevance: number;
+  text: string;
+  address: string;
+  context: any[];
+} & GeoJSON.Feature<GeoJSON.Point>;
 
 const geocoderApiOptions = {
   country: 'us',
@@ -36,39 +46,26 @@ const initialViewport = {
 
 const IndexPage = () => {
   // const classes = useStyles();
-  const [viewport, setViewport] = useState(initialViewport);
+  const mapRef = useRef<MapRef>(null);
 
-  const _onViewportChange = useCallback((viewport) => {
-    setViewport(viewport);
+  const _handleGeocoderSelect = useCallback(({center}: GeocoderResult) => {
+    mapRef.current?.flyTo({
+      zoom: 18,
+      duration: 4000,
+      center,
+    });
   }, []);
-
-  const _handleGeocoderSelect = useCallback(
-    (result) => {
-      const newViewport = {
-        ...viewport,
-        longitude: result.center[0],
-        latitude: result.center[1],
-        zoom: 18,
-        transitionDuration: 4000,
-        transitionInterpolator: new FlyToInterpolator(),
-        transitionEasing: easeCubic,
-      };
-      _onViewportChange(newViewport);
-    },
-    [viewport, _onViewportChange]
-  );
 
   return (
     <div className="App">
       <MapGL
-        {...viewport}
-        mapboxApiAccessToken={
+        initialViewState={initialViewport}
+        mapboxAccessToken={
           process.env.NEXT_PUBLIC_REACT_APP_MAPBOX_ACCESS_TOKEN ?? ''
         }
-        onViewportChange={_onViewportChange}
       >
         <div className="navControls">
-          <NavigationControl onViewportChange={_onViewportChange} />
+          <NavigationControl />
         </div>
 
         <Box className="geocoder" width={300}>
