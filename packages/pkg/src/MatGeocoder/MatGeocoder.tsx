@@ -5,7 +5,6 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import {
   Fade,
-  Grid,
   IconButton,
   InputAdornment,
   MenuItem,
@@ -176,10 +175,10 @@ const MatGeocoder = ({
             }}
             {...restInputPaperProps}
           >
-            <Grid container alignItems="center" spacing={1} wrap="nowrap">
-              <Grid item xs sx={{flexShrink: 0, flexGrow: 1}}>
+            <Box display="flex" flexDirection="row" alignItems="center">
+              <Box flex="auto" sx={{flexShrink: 0, flexGrow: 1}}>
                 {searchInput}
-              </Grid>
+              </Box>
               {/* Unmount and mount releases space for TexField to grow AND show animation. */}
               <Fade
                 in={value.length > 0}
@@ -187,6 +186,7 @@ const MatGeocoder = ({
                 mountOnEnter={true}
               >
                 <Box
+                  flex="auto"
                   sx={{
                     flexGrow: 0,
                     flexShrink: 1,
@@ -201,7 +201,7 @@ const MatGeocoder = ({
                   </IconButton>
                 </Box>
               </Fade>
-            </Grid>
+            </Box>
           </Paper>
         </>
       );
