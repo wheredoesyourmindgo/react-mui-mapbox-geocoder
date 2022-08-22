@@ -47,8 +47,8 @@
   "peerDependencies": {
     "@mui/icons-material": "^5.0.1",
     "@mui/material": "^5.0.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "dependencies": {
     "autosuggest-highlight": "^3.3.4",
