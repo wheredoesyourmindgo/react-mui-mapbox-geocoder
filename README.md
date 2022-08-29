@@ -81,4 +81,21 @@ return (
     onSelect: (required), (selectedFeature) => {...},
     onSuggest: (optional), (suggestedResults) => {...}
 
+## Can I use a Material UI TextField instead of a raw Input?
+
+### Yes.
+
+To replace the `<InputBase />` component by a `<TextField />`, specify an object using the *TextFieldProps* property. This object can be empty: as long as it is not undefined, a `<TextField />` will be used.
+
+Please note that if you use the property *TextFieldProps*, the property *inputProps* will be completely ignored. To specify the *inputProps* of the `<TextField />`, do:
+```
+textFieldProps={{
+	inputProps: {
+		...
+	}	
+}}
+```
+
+## More  
+
 See [Mapbox API Docs](https://www.mapbox.com/api-documentation/#request-format) for more information.
