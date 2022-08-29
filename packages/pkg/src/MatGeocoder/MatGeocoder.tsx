@@ -16,6 +16,8 @@ import {
   alpha,
   InputBase,
   InputBaseProps,
+  TextField,
+  TextFieldProps,
 } from '@mui/material';
 import usePrevious from '../hooks/usePrevious';
 import SearchIcon from '@mui/icons-material/Search';
@@ -45,9 +47,9 @@ type Props = {
   inputClasses?: any; // Override css classes to input.
   inputPaperProps?: Partial<PaperProps>; // Override input container props.
   suggestionsPaperProps?: PaperProps; // Override suggestions container props.
-  inputProps?: Partial<InputBaseProps>;
+  inputProps?: Partial<InputBaseProps>;  // If textFieldsProps is provided, these props will be ignored.
+  textFieldProps?: Partial<TextFieldProps>; // Specify if you want the input to be a TextField instead of a MUI input. rawInputProps will be ignored.
   showInputContainer?: boolean;
-  disableUnderline?: boolean;
 };
 
 const SearchInput = ({...props}: Partial<InputBaseProps>) => {
@@ -60,6 +62,23 @@ const SearchInput = ({...props}: Partial<InputBaseProps>) => {
           <SearchIcon color="action" />
         </InputAdornment>
       }
+      {...props}
+    />
+  );
+};
+
+const SearchTextField = ({...props}: Partial<TextFieldProps>) => {
+  return (
+    <TextField
+      type="search"
+      fullWidth
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon color="action" />
+          </InputAdornment>
+        ),
+      }}
       {...props}
     />
   );
@@ -93,6 +112,7 @@ const MatGeocoder = ({
   onInputBlur,
   inputClasses,
   inputProps: inputPropsParam,
+  textFieldProps,
   inputPaperProps,
 }: Props) => {
   const [results, setResults] = useState<Result[]>([]);
@@ -132,10 +152,13 @@ const MatGeocoder = ({
   const theme = useTheme();
 
   const renderInput = useCallback(
+
     (renderInputProps) => {
+
       const {ref, inputClasses, ...other} = renderInputProps;
       const {...restInputPaperProps} = inputPaperProps ?? {};
-      const searchInput = (
+
+      let searchInput = (
         <SearchInput
           classes={inputClasses}
           inputRef={ref}
@@ -143,6 +166,17 @@ const MatGeocoder = ({
           {...inputPropsParam}
         />
       );
+
+      if (textFieldProps) {
+        searchInput = (
+          <SearchTextField
+            classes={inputClasses}
+            inputRef={ref}
+            {...other}
+            {...textFieldProps}
+          />
+        )
+      }
 
       if (!showInputContainer) {
         return searchInput;
@@ -208,6 +242,7 @@ const MatGeocoder = ({
     },
     [
       inputPropsParam,
+      textFieldProps,
       showInputContainer,
       loading,
       showLoader,
