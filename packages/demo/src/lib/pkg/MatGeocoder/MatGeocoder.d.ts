@@ -46,10 +46,15 @@ declare type Props = {
      */
     textFieldProps?: Partial<TextFieldProps>;
     showInputContainer?: boolean;
+    /**
+     * Callback when the input is cleared (via pressing the clear button or backspacing to an empty string)
+     * @returns
+     */
+    onInputClear?: () => void;
 };
 /**
  * Geocoder component: connects to Mapbox.com Geocoding API
  * and provides an auto-completing interface for finding locations.
  */
-declare const MatGeocoder: ({ endpoint, inputPlaceholder, showLoader, source, onSuggest, focusOnMount, showInputContainer, inputValue, proximity, country, bbox, types, limit, autocomplete, language, suggestionsPaperProps, onSelect, accessToken, onInputFocus, onInputBlur, inputClasses, inputProps: inputPropsParam, textFieldProps, inputPaperProps, }: Props) => JSX.Element | null;
+declare const MatGeocoder: ({ endpoint, inputPlaceholder, showLoader, source, onSuggest, focusOnMount, showInputContainer, inputValue, proximity, country, bbox, types, limit, autocomplete, language, suggestionsPaperProps, onSelect, accessToken, onInputFocus, onInputBlur, inputClasses, inputProps: inputPropsParam, textFieldProps, inputPaperProps, onInputClear, }: Props) => JSX.Element | null;
 export default MatGeocoder;
