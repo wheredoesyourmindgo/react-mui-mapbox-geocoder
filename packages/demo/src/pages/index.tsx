@@ -70,7 +70,6 @@ const IndexPage = () => {
 
         <Box className="geocoder" width={300}>
           <MatGeocoder
-            disableUnderline
             focusOnMount
             inputPlaceholder="Search for Address"
             inputValue="12345 A Street"

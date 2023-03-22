@@ -1,5 +1,9 @@
+/// <reference types="react" />
 import { PaperProps, InputBaseProps, TextFieldProps } from '@mui/material';
 declare type Props = {
+    /**
+     * Anytime this value changed, the user input will be overriden with it. WARN: This is not a callback, inputValue won't change when the user types.
+     */
     inputValue?: string;
     endpoint?: string;
     source?: string;
@@ -21,10 +25,25 @@ declare type Props = {
     onSuggest?: (results: any[]) => void;
     onInputBlur?: (event: any) => void;
     onInputFocus?: (event: any) => void;
+    /**
+     * Override css classes to input.
+     */
     inputClasses?: any;
+    /**
+     * Override input container props.
+     */
     inputPaperProps?: Partial<PaperProps>;
+    /**
+     * Override suggestions container props.
+     */
     suggestionsPaperProps?: PaperProps;
+    /**
+     * If textFieldsProps is provided, these props will be ignored.
+     */
     inputProps?: Partial<InputBaseProps>;
+    /**
+     * Specify if you want the input to be a TextField instead of a MUI input. rawInputProps will be ignored.
+     */
     textFieldProps?: Partial<TextFieldProps>;
     showInputContainer?: boolean;
 };
