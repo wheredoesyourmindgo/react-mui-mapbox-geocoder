@@ -76,6 +76,12 @@ type Props = {
   textFieldProps?: Partial<TextFieldProps>;
   
   showInputContainer?: boolean;
+
+  /**
+   * Callback when the input is cleared (via pressing the clear button or backspacing to an empty string)
+   * @returns 
+   */
+  onInputClear?: () => void;
 };
 
 const SearchInput = ({...props}: Partial<InputBaseProps>) => {
@@ -140,6 +146,7 @@ const MatGeocoder = ({
   inputProps: inputPropsParam,
   textFieldProps,
   inputPaperProps,
+  onInputClear,
 }: Props) => {
 
   const [results, setResults] = useState<Result[]>([]);
@@ -169,6 +176,13 @@ const MatGeocoder = ({
   useEffect(() => {
     onSuggest && onSuggest(results);
   }, [results, onSuggest]);
+
+  // Send a callback when the input is cleared
+  useEffect(() => {
+    if (value === "" && value !== prevValue && onInputClear) {
+      onInputClear();
+    }
+  }, [value, prevValue, onInputClear]);
 
   const handleClearInput = useCallback(() => {
     setValue('');
