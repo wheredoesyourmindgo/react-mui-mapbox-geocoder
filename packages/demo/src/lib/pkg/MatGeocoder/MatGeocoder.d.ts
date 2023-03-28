@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { PaperProps, InputBaseProps, TextFieldProps } from '@mui/material';
 declare type Props = {
     /**
