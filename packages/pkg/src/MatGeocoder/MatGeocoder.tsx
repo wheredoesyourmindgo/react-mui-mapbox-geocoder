@@ -26,7 +26,12 @@ import DebouncedProgressBar from './debouncedProgressBar/debouncedProgressBar';
 import {Result} from './Result';
 
 type Props = {
+
+  /**
+   * Anytime this value changed, the user input will be overriden with it. WARN: This is not a callback, inputValue won't change when the user types.
+   */
   inputValue?: string;
+
   endpoint?: string;
   source?: string;
   inputPlaceholder?: string;
@@ -44,12 +49,39 @@ type Props = {
   onSuggest?: (results: any[]) => void;
   onInputBlur?: (event: any) => void;
   onInputFocus?: (event: any) => void;
-  inputClasses?: any; // Override css classes to input.
-  inputPaperProps?: Partial<PaperProps>; // Override input container props.
-  suggestionsPaperProps?: PaperProps; // Override suggestions container props.
-  inputProps?: Partial<InputBaseProps>;  // If textFieldsProps is provided, these props will be ignored.
-  textFieldProps?: Partial<TextFieldProps>; // Specify if you want the input to be a TextField instead of a MUI input. rawInputProps will be ignored.
+
+  /**
+   * Override css classes to input.
+   */
+  inputClasses?: any; 
+
+  /**
+   * Override input container props.
+   */
+  inputPaperProps?: Partial<PaperProps>;
+
+  /**
+   * Override suggestions container props.
+   */
+  suggestionsPaperProps?: PaperProps;
+
+  /**
+   * If textFieldsProps is provided, these props will be ignored.
+   */
+  inputProps?: Partial<InputBaseProps>;
+
+  /**
+   * Specify if you want the input to be a TextField instead of a MUI input. rawInputProps will be ignored.
+   */
+  textFieldProps?: Partial<TextFieldProps>;
+  
   showInputContainer?: boolean;
+
+  /**
+   * Callback when the input is cleared (via pressing the clear button or backspacing to an empty string)
+   * @returns 
+   */
+  onInputClear?: () => void;
 };
 
 const SearchInput = ({...props}: Partial<InputBaseProps>) => {
@@ -114,7 +146,9 @@ const MatGeocoder = ({
   inputProps: inputPropsParam,
   textFieldProps,
   inputPaperProps,
+  onInputClear,
 }: Props) => {
+
   const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTime, setSearchTime] = useState(new Date());
@@ -142,6 +176,13 @@ const MatGeocoder = ({
   useEffect(() => {
     onSuggest && onSuggest(results);
   }, [results, onSuggest]);
+
+  // Send a callback when the input is cleared
+  useEffect(() => {
+    if (value === "" && value !== prevValue && onInputClear) {
+      onInputClear();
+    }
+  }, [value, prevValue, onInputClear]);
 
   const handleClearInput = useCallback(() => {
     setValue('');
