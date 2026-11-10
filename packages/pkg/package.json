@@ -1,6 +1,6 @@
 {
   "name": "react-mui-mapbox-geocoder",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A Material UI Autosuggest'ing Mapbox Geocoder for locating addresses and points of interest.",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "dev": "yarn build watch",
     "clean": "rimraf {dist,.rts2*}"
   },
-  "author": "Abe Hendricks<moemanchu@icloud.com>",
+  "author": "wheredoesyourmindgo <3316678+wheredoesyourmindgo@users.noreply.github.com>",
   "devDependencies": {
     "@types/autosuggest-highlight": "^3.2.0",
     "@types/react": "^17.0.27",

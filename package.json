@@ -6,7 +6,7 @@
   ],
   "main": "packages/pkg/dist/index.js",
   "license": "MIT",
-  "author": "Abe Hendricks<moemanchu@icloud.com>",
+  "author": "wheredoesyourmindgo <3316678+wheredoesyourmindgo@users.noreply.github.com>",
   "scripts": {
     "build:pkg": "yarn --cwd packages/pkg build",
     "build:demo": "yarn --cwd packages/demo build",
